@@ -32,7 +32,7 @@ public class AutoLoginController {
 	@RequestMapping(value = "/auto-login" , method= RequestMethod.GET)
 	public String autoLogin(@RequestParam("user-id") String userId , @RequestParam(name="continue-site", required=false , defaultValue="http://www.knongdai.com") String continueSite) {
 
-		User user = userService.findUserByUserId(Integer.parseInt(Encryption.decode(userId)));
+		User user = userService.findUserByUserId(userId);
 
 		System.out.println("Username : " + user.getUsername());
 		

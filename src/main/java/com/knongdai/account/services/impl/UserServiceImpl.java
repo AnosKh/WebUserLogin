@@ -7,6 +7,7 @@ import com.knongdai.account.entities.User;
 import com.knongdai.account.entities.forms.UserLogin;
 import com.knongdai.account.repositories.UserRepository;
 import com.knongdai.account.services.UserService;
+import com.knongdai.account.utilities.Encryption;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -20,9 +21,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findUserByUserId(int userid) {
+	public User findUserByUserId(String userid) {
 		// TODO Auto-generated method stub
-		return userRepository.findUserByUserId(userid);
+		return userRepository.findUserByUserId(Integer.parseInt(Encryption.decode(userid)));
 	}
 
 }

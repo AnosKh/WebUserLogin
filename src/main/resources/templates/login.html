@@ -578,11 +578,13 @@
 	  	            		Materialize.toast('<span>Incorrect email or password! please try again!</span><a class=&quot;btn-flat yellow-text&quot; href=&quot;#!&quot;><a>', 5000)
 	  	            	}else{
 	  	            		Materialize.toast('<span>Login Successful</span><a class=&quot;btn-flat yellow-text&quot; href=&quot;#!&quot;><a>', 5000)
-	  	            		setCookie("KNONG_DAI_USER_ID", data)
-	  	            		if($("#continueSite").text() != ""){
-	  	            			location.href=$("#continueSite").text();
-	  	            		}
-	  	            		alert("Logined success. " + data + " " + $("continueSite").text());
+	  	            		
+	  	            		alert("Logined success. " + data + " " + $("#continueSite").text());
+	  	            		
+	  	            		setCookie("KNONG_DAI_USER_ID", data);
+	  	            		isAuthenticated($("#continueSite").text());
+	  	            		
+	  	            		
 	  	            	}
 	  	            	
 	  	            },
