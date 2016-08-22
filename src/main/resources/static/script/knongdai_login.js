@@ -24,13 +24,15 @@ function getCookie(cname) {
 function isAnonymous() {
 	var USER_ID = getCookie("KNONG_DAI_USER_ID");
 	if (USER_ID != "") {
-		location.href = window.location.origin+"/auto-login?user-id="+ USER_ID+"&continuePage="+window.location.href;
+		location.href = window.location.origin+"/auto-login?user-id="+ USER_ID+"&continue-site="+window.location.href;
 	}
 }
 
 function isAuthenticated(continueSite){
+	var USER_ID = getCookie("KNONG_DAI_USER_ID");
 	if( continueSite != ""){
-  	    location.href = continuePage+"/auto-login?email="+user_id+"&continue-site="+continuePage;
+		alert(USER_ID);
+  	    location.href = continueSite+"/auto-login?user-id="+USER_ID+"&continue-site="+continueSite;
     }else{
     	location.href = "http://www.knongdai.com/";
     }

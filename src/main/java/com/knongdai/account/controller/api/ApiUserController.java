@@ -1,6 +1,7 @@
 package com.knongdai.account.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.knongdai.account.entities.User;
 import com.knongdai.account.entities.forms.UserLogin;
 import com.knongdai.account.services.UserService;
+import com.knongdai.account.utilities.Encryption;
 import com.knongdai.account.utilities.HttpCode;
 import com.knongdai.account.utilities.HttpMessage;
 import com.knongdai.account.utilities.ResponseRecord;
@@ -42,5 +44,29 @@ public class ApiUserController {
 		}
 		return response;
 	}
+	
+	@RequestMapping(value="/{user-id}" , method = RequestMethod.POST)
+	public ResponseRecord<User> findUserByUserId(@PathVariable("user-id") String userId){
+		ResponseRecord<User> response = new ResponseRecord<>();
+		User user= userService.findUserByUserId(userId);
+		try{
+			if(user == null){
+				response.setCode(HttpCode.NOT_FOUND);
+				response.setStatus(false);
+				response.setMessage(HttpMessage.notFound());
+			}else{
+				response.setCode(HttpCode.OK);
+				response.setStatus(true);
+				response.setMessage(HttpMessage.found());
+				response.setData(user);
+			}
+		}catch(Exception e){
+			response.setCode(HttpCode.INTERNAL_SERVER_ERROR);
+			response.setMessage(HttpMessage.error());
+			e.printStackTrace();
+		}
+		return response;
+	}
+	
 
 }
