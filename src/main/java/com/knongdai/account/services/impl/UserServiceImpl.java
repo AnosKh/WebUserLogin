@@ -19,4 +19,10 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findUserByEmail(userLogin);
 	}
 
+	@Override
+	public User findUserByUserId(int userid) {
+		// TODO Auto-generated method stub
+		return userRepository.findUserByUserId(userid);
+	}
+
 }

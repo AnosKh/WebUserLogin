@@ -6,5 +6,6 @@ import com.knongdai.account.entities.forms.UserLogin;
 public interface UserService {
 	
 	User findUserByEmail(UserLogin userLogin);
+	User findUserByUserId(int userid);
 
 }

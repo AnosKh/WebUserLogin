@@ -33,6 +33,27 @@ public interface UserSQL {
 			+ " WHERE"
 			+ " 	UR.user_id = #{userId}";
 	
-	 
+	 String R_USER_BY_USER_ID="SELECT"
+				+ "		U.userid,"
+				+ " 	U.email,"
+				+ " 	U.password,"
+				+ " 	U.gender,"
+				+ " 	U.dateofbirth,"
+				+ " 	U.phonenumber,"
+				+ " 	U.registerdate,"
+				+ " 	U.userimageurl,"
+				+ " 	U.point,"
+				+ "		U.universityid,"
+				+ " 	U.departmentid,"
+				+ " 	U.userstatus,"
+				+ " 	U.sc_fb_id,"
+				+ " 	U.sc_type,"
+				+ " 	U.isconfirmed,"
+				+ " 	U.signup_with,"
+				+ "     U.username"
+				+ " FROM"
+				+ " 	tbluser U"
+				+ " WHERE"
+				+ " 	U.userid = #{userid} ";
 
 }
