@@ -55,5 +55,8 @@ public interface UserSQL {
 				+ " 	tbluser U"
 				+ " WHERE"
 				+ " 	U.userid = #{userid} ";
+	 
+	 String C_USER="INSERT INTO tbluser ( email , username , password , gender , dateofbirth , phonenumber , registerdate , userimageurl , point , universityid,  departmentid, userstatus , sc_fb_id , sc_type  , isconfirmed , signup_with  ) VALUES ()";
+	 
 
 }
