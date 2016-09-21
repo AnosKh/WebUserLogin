@@ -66,6 +66,30 @@ public class User implements UserDetails {
 	@JsonProperty("ROLES")
 	private List<Role> roles;
 	
+	//=========================
+	// new field store status such as '0': Inactive, '1': Active, '2': Deleted, '3': Locked (Ean Sokchomrern, 15/09/2016)
+	@JsonProperty("STATUS")
+	private String status;
+		
+	// new field store verification_code ((Ean Sokchomrern, 15/09/2016)
+	@JsonProperty("VERIFICATION_CODE")
+	private String verification_code;
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getVerification_code() {
+		return verification_code;
+	}
+	public void setVerification_code(String verification_code) {
+		this.verification_code = verification_code;
+	}
+	//=============================
+	
+	
 	public int getUserId() {
 		return userId;
 	}

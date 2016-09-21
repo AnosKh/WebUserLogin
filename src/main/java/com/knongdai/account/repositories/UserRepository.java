@@ -2,15 +2,18 @@ package com.knongdai.account.repositories;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.knongdai.account.entities.Role;
 import com.knongdai.account.entities.User;
+import com.knongdai.account.entities.UserRegister;
 import com.knongdai.account.entities.forms.UserLogin;
 import com.knongdai.account.repositories.sql.UserSQL;
 
@@ -19,6 +22,11 @@ public interface UserRepository {
 	
 	@Select(UserSQL.R_USER_BY_EMAIL)
 	@Results(value={
+			// new field store status such as '0': Inactive, '1': Active, '2': Deleted, '3': Locked (Ean Sokchomrern, 15/09/2016)
+			@Result(property="status" , column="status"),    
+			// new field store verification_code ((Ean Sokchomrern, 15/09/2016)
+			@Result(property="verification_code" , column="verification_code"),
+			
 			@Result(property="userId" , column="userid"),
 			@Result(property="email" , column="email"),
 			@Result(property="password" , column="password"),
@@ -72,4 +80,19 @@ public interface UserRepository {
 	})
 	User findUserByUserId(int userid);
 	
+	// Update User status when verifying email -- Writer: Ean Sokchomrern, Date: 15/09/2016
+	@Update(UserSQL.U_USER_VERIFY_EMAIL)
+	public boolean updateUserVerifyEmail(String verification_code);
+	
+	// Register new user - Ean Sokchomrern, 16/09/2016
+	@Insert(UserSQL.C_USER_REGISTER)
+	public boolean insertUserRegister(UserRegister user);
+	
+	// Check user exists or not. If so, return verification_code to reset password. Ean Sokchomrern (19/09/2016)
+	@Select(UserSQL.R_USER_EMAIL)
+	public String getVerificationCodeByEmail(String email);
+	
+	// Update password by verification_code. Ean Sokchomrern (20/09/2016)
+	@Update(UserSQL.U_USER_PASSWORD)
+	public boolean updateUserPassword(UserRegister user);
 }
