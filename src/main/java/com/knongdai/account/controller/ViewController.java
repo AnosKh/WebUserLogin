@@ -13,5 +13,12 @@ public class ViewController {
 		model.addAttribute("continueSite",continueSite);
 		return "login";
 	}
+	
+	@RequestMapping({"register"})
+	public String registerPage(@RequestParam(value="continue-site" , required=false) String continueSite ,ModelMap model){
+		model.addAttribute("continueSite",continueSite);
+		return "register";
+	}
+	
 
 }
