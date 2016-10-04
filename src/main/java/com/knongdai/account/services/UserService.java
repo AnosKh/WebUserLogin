@@ -12,6 +12,7 @@ public interface UserService {
 	
 	User findUserByEmail(UserLogin userLogin);
 	User findUserByUserId(String userid);
+	User findUserByUserHash(String userHash);
 
 	// Update User status when verifying email -- Writer: Ean Sokchomrern, Date: 15/09/2016
 	public boolean updateUserVerifyEmail(String verification_code);	

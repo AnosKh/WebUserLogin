@@ -63,9 +63,18 @@ public class User implements UserDetails {
 	@JsonProperty("SIGN_UP_WITH")
 	private String signUpWith;
 	
+	@JsonProperty("USER_HASH")
+	private String userHash;
+	
 	@JsonProperty("ROLES")
 	private List<Role> roles;
 	
+	public String getUserHash() {
+		return userHash;
+	}
+	public void setUserHash(String userHash) {
+		this.userHash = userHash;
+	}
 	//=========================
 	// new field store status such as '0': Inactive, '1': Active, '2': Deleted, '3': Locked (Ean Sokchomrern, 15/09/2016)
 	@JsonProperty("STATUS")

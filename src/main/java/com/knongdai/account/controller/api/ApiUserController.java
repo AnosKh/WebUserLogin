@@ -77,6 +77,28 @@ public class ApiUserController {
 		return response;
 	}
 	
+	@RequestMapping(value="/user-hash/{user-hash}" , method = RequestMethod.POST)
+	public ResponseRecord<User> findUserByUserHash(@PathVariable("user-hash") String userHash){
+		ResponseRecord<User> response = new ResponseRecord<>();
+		User user= userService.findUserByUserHash(userHash);
+		try{
+			if(user == null){
+				response.setCode(HttpCode.NOT_FOUND);
+				response.setStatus(false);
+				response.setMessage(HttpMessage.notFound());
+			}else{
+				response.setCode(HttpCode.OK);
+				response.setStatus(true);
+				response.setMessage(HttpMessage.found());
+				response.setData(user);
+			}
+		}catch(Exception e){
+			response.setCode(HttpCode.INTERNAL_SERVER_ERROR);
+			response.setMessage(HttpMessage.error());
+			e.printStackTrace();
+		}
+		return response;
+	}
 	
 	// Update User status when verifying email -- Writer: Ean Sokchomrern, Date: 15/09/2016
 	@RequestMapping(value="/updateUserVerifyEmail/{verification_code}", method = RequestMethod.PUT)
