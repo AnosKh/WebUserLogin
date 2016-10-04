@@ -56,6 +56,12 @@ public class UserServiceImpl implements UserService {
 		return userRepository.updateUserPassword(user);
 	}
 
+	@Override
+	public User findUserByUserHash(String userHash) {
+		// TODO Auto-generated method stub
+		return userRepository.findUserByUserHash(userHash);
+	}
+
 
 	
 	

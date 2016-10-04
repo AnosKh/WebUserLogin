@@ -20,6 +20,7 @@ public interface UserSQL {
 			+ " 	U.isconfirmed,"
 			+ " 	U.signup_with,"
 			+ "     U.username,"
+			+ "     U.user_hash,"
 			+ "     U.status,"            // new field store status such as '0': Inactive, '1': Active, '2': Deleted, '3': Locked (Ean Sokchomrern, 15/09/2016)
 			+ "     U.verification_code"  // new field store verification_code ((Ean Sokchomrern, 15/09/2016)
 			+ " FROM"
@@ -52,11 +53,36 @@ public interface UserSQL {
 				+ " 	U.sc_type,"
 				+ " 	U.isconfirmed,"
 				+ " 	U.signup_with,"
+				+ "     U.user_hash,"
 				+ "     U.username"
 				+ " FROM"
 				+ " 	tbluser U"
 				+ " WHERE"
 				+ " 	U.userid = #{userid} ";
+	 
+	 String R_USER_BY_USER_HASH="SELECT"
+				+ "		U.userid,"
+				+ " 	U.email,"
+				+ " 	U.password,"
+				+ " 	U.gender,"
+				+ " 	U.dateofbirth,"
+				+ " 	U.phonenumber,"
+				+ " 	U.registerdate,"
+				+ " 	U.userimageurl,"
+				+ " 	U.point,"
+				+ "		U.universityid,"
+				+ " 	U.departmentid,"
+				+ " 	U.userstatus,"
+				+ " 	U.sc_fb_id,"
+				+ " 	U.sc_type,"
+				+ " 	U.isconfirmed,"
+				+ " 	U.signup_with,"
+				+ "     U.user_hash,"
+				+ "     U.username"
+				+ " FROM"
+				+ " 	tbluser U"
+				+ " WHERE"
+				+ " 	U.user_hash = #{userHash} ";
 	 
 	 String C_USER="INSERT INTO tbluser ( email , username , password , gender , dateofbirth , phonenumber , registerdate , userimageurl , point , universityid,  departmentid, userstatus , sc_fb_id , sc_type  , isconfirmed , signup_with  ) VALUES ()";
 	 

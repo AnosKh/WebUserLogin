@@ -43,6 +43,7 @@ public interface UserRepository {
 			@Result(property="isConfirmed" , column="isconfirmed"),
 			@Result(property="signUpWith" , column="signup_with"),
 			@Result(property="encUserId" , column="userid"),
+			@Result(property="userHash" , column="user_hash"),
 			@Result(property="roles" , column="userid" ,
 					many = @Many(select = "findRolesByUserId")
 			)
@@ -74,11 +75,39 @@ public interface UserRepository {
 			@Result(property="isConfirmed" , column="isconfirmed"),
 			@Result(property="signUpWith" , column="signup_with"),
 			@Result(property="encUserId" , column="userid"),
+			@Result(property="userHash" , column="user_hash"),
 			@Result(property="roles" , column="userid" ,
 					many = @Many(select = "findRolesByUserId")
 			)
 	})
 	User findUserByUserId(int userid);
+	
+	@Select(UserSQL.R_USER_BY_USER_HASH)
+	@Results(value={
+			@Result(property="userId" , column="userid"),
+			@Result(property="email" , column="email"),
+			@Result(property="password" , column="password"),
+			@Result(property="username" , column="username"),
+			@Result(property="gender" , column="gender"),
+			@Result(property="registeredDate" , column="registerdate"),
+			@Result(property="userImageUrl" , column="userimageurl"),
+			@Result(property="point" , column="point"),
+			@Result(property="universityId" , column="universityid"),
+			@Result(property="departmentId" , column="departmentid"),
+			@Result(property="userStatus" , column="userstatus"),
+			@Result(property="socialId" , column="sc_fb_id"),
+			@Result(property="socialType" , column="sc_type"),
+			@Result(property="isConfirmed" , column="isconfirmed"),
+			@Result(property="signUpWith" , column="signup_with"),
+			@Result(property="encUserId" , column="userid"),
+			@Result(property="userHash" , column="user_hash"),
+			@Result(property="roles" , column="userid" ,
+					many = @Many(select = "findRolesByUserId")
+			)
+	})
+	User findUserByUserHash(String userHash);
+	
+	
 	
 	// Update User status when verifying email -- Writer: Ean Sokchomrern, Date: 15/09/2016
 	@Update(UserSQL.U_USER_VERIFY_EMAIL)
