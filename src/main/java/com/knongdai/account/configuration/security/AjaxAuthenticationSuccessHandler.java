@@ -23,11 +23,13 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
 		
-		if (user.isConfirmed() == false) {
+		// status such as '0': Inactive, '1': Active, '2': Deleted, '3': Locked (Ean Sokchomrern, 15/09/2016)
+		if (user.getStatus().equals("0")) {
 			SecurityContextHolder.getContext().setAuthentication(null);
+			response.getWriter().print("Inactive");
+		}else if(user.getStatus().equals("1")){
+			response.getWriter().print(user.getUserHash());
 		}
-
-		response.getWriter().print(user.getEncUserId());
 		response.getWriter().flush();
 
 	}

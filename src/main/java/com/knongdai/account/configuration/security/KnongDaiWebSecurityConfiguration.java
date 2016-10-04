@@ -69,7 +69,7 @@ public class KnongDaiWebSecurityConfiguration extends WebSecurityConfigurerAdapt
 			.logoutUrl("/logout")
 			.logoutSuccessUrl("/login?logout")
 			.invalidateHttpSession(true)
-			.deleteCookies("JESSIONID","KNONG_DAI_USER_ID")
+			.deleteCookies("JESSIONID","KD_USER_HASH")
 			.permitAll();
 		
 	  	http.csrf().disable();

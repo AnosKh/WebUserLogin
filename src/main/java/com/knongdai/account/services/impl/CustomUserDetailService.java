@@ -28,7 +28,7 @@ public class CustomUserDetailService implements UserDetailsService{
 		
 		System.out.println(user.getEmail());
 		System.out.println(user.getPassword());
-		System.out.println(user.getRoles().get(0).getRoleName());
+//		System.out.println(user.getRoles().get(0).getRoleName());
 		
 		return user;
 	}

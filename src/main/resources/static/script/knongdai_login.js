@@ -3,8 +3,7 @@ function setCookie(cname, cvalue) {
 	var d = new Date();
 	d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
 	var expires = "expires=" + d.toGMTString();
-	document.cookie = cname + "=" + cvalue + "; " + expires+ ";domain=120.136.24.174;"; // domain=localhost";;domain=120.136.24.174
-//	alert(expires); 
+	document.cookie = cname + "=" + cvalue + "; " + expires+ ";domain=localhost"; //;domain=120.136.24.174  ;domain=120.136.24.174;"
 }
 function getCookie(cname) {
 	var name = cname + "=";
@@ -22,18 +21,17 @@ function getCookie(cname) {
 }
 
 function isAnonymous(continueSite) {
-	var USER_ID = getCookie("KNONG_DAI_USER_ID");
-	if (USER_ID != "") {
-		location.href = continueSite+"/auto-login?user-id="+ USER_ID+"&continue-site="+continueSite;
+	var USER_HASH = getCookie("KD_USER_HASH");
+	if (USER_HASH != "") {
+		location.href = continueSite+"/auto-login?user-hash="+ USER_HASH+"&continue-site="+continueSite;
 	}
 }
 
 function isAuthenticated(continueSite){
-	var USER_ID = getCookie("KNONG_DAI_USER_ID");
-	if(USER_ID != ""){
+	var USER_HASH = getCookie("KD_USER_HASH");
+	if(USER_HASH != ""){
 		if( continueSite != ""){
-			alert(USER_ID);
-			location.href = continueSite+"/auto-login?user-id="+USER_ID+"&continue-site="+continueSite;
+			location.href = continueSite+"/auto-login?user-hash="+USER_HASH+"&continue-site="+continueSite;
 		}else{
 			location.href = "http://www.knongdai.com/";
 		}

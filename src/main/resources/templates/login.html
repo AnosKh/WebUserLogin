@@ -161,18 +161,10 @@
 	  	            	}else if(data == "Bad credentials"){
 	  	            		myAlert("Incorrect email or password! please try again!");
 	  	            		ValidateForm(frmLogin.email,frmLogin.password);
- 	  	            		//myAlert(data);
- 	  	            		
-	  	            		/* Materialize.toast('<span>Incorrect email or password! please try again!</span><a class=&quot;btn-flat yellow-text&quot; href=&quot;#!&quot;><a>', 5000) */
 	  	            	}else{
-	  	            		/* Materialize.toast('<span>Login Successful</span><a class=&quot;btn-flat yellow-text&quot; href=&quot;#!&quot;><a>', 5000) */
-	  	            		
-	  	            		myAlert("Logined success. ");
-	  	            		
-	  	            		setCookie("KNONG_DAI_USER_ID", data);
+	  	            		alert("Logined success. " + data + " " + $("#continueSite").text());
+	  	            		setCookie("KD_USER_HASH", data);
 	  	            		isAuthenticated($("#continueSite").text());
-	  	            		
-	  	            		
 	  	            	}
 	  	            	
 	  	            },

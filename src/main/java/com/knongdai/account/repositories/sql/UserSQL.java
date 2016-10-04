@@ -54,6 +54,7 @@ public interface UserSQL {
 				+ " 	U.isconfirmed,"
 				+ " 	U.signup_with,"
 				+ "     U.user_hash,"
+				+ "     U.status,"            // new field store status such as '0': Inactive, '1': Active, '2': Deleted, '3': Locked (Ean Sokchomrern, 15/09/2016)
 				+ "     U.username"
 				+ " FROM"
 				+ " 	tbluser U"
@@ -78,6 +79,7 @@ public interface UserSQL {
 				+ " 	U.isconfirmed,"
 				+ " 	U.signup_with,"
 				+ "     U.user_hash,"
+				+ "     U.status,"            // new field store status such as '0': Inactive, '1': Active, '2': Deleted, '3': Locked (Ean Sokchomrern, 15/09/2016)
 				+ "     U.username"
 				+ " FROM"
 				+ " 	tbluser U"

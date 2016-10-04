@@ -44,6 +44,7 @@ public interface UserRepository {
 			@Result(property="signUpWith" , column="signup_with"),
 			@Result(property="encUserId" , column="userid"),
 			@Result(property="userHash" , column="user_hash"),
+			@Result(property="status" , column="status"),
 			@Result(property="roles" , column="userid" ,
 					many = @Many(select = "findRolesByUserId")
 			)
@@ -76,6 +77,7 @@ public interface UserRepository {
 			@Result(property="signUpWith" , column="signup_with"),
 			@Result(property="encUserId" , column="userid"),
 			@Result(property="userHash" , column="user_hash"),
+			@Result(property="status" , column="status"),
 			@Result(property="roles" , column="userid" ,
 					many = @Many(select = "findRolesByUserId")
 			)
@@ -101,6 +103,7 @@ public interface UserRepository {
 			@Result(property="signUpWith" , column="signup_with"),
 			@Result(property="encUserId" , column="userid"),
 			@Result(property="userHash" , column="user_hash"),
+			@Result(property="status" , column="status"),
 			@Result(property="roles" , column="userid" ,
 					many = @Many(select = "findRolesByUserId")
 			)
