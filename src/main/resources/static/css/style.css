@@ -54,20 +54,20 @@
 
 /**************************************************** 1. General Style **************************************************************/
 
-body{ background-color: #eaeaea; font-size: 14px; }
+body{ background-color: white; font-size: 15px; }
 a:focus { outline: none; }
-.container { width: 100%; }
+.container { width: 100%; margin: 50px auto; }
 .wrapper{
   position: relative;
   bottom: 60px;
 }
 .wrapper.margin-top {
   display: inline-block;
-  margin-top: 350px;
+  margin-top: 247px;
   width: 100%;
 }
 .section{ margin-top: 50px; padding: 0; }
-.wrapper.grey-background{ background-color: #eaeaea; bottom: 200px; padding: 20px 0 0 0; }
+.wrapper.grey-background{ background-color: white; bottom: 200px; padding: 20px 0 0 0; }
 .row{ margin-bottom: 16px;}
 .row .col{ padding: 0 8px}
 .no-border{ border: none !important; }
@@ -96,7 +96,7 @@ header{
   -pie-transition-duration: 0.8s;
 }
 header.header-fix{
-  height: 125px;
+  height: 70px;
   background-color: #fff;
   z-index: 997;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
@@ -1179,7 +1179,7 @@ ul.pgwSlider > li span, .pgwSlider > .ps-list > li span
 
 /********************************************************* 13 Shopping Cart **********************************************************/
 
-.shopping-cart{ background-color: #fff; overflow: hidden; padding: 15px 30px 30px 30px;}
+.shopping-cart{ background-color: #50a253; overflow: hidden; padding: 15px 30px 30px 30px;}
 .shopping-cart table{ margin-bottom: 60px;}
 .shopping-cart table.bordered tr{ border-left: 1px solid #d0d0d0; border-right: 1px solid #d0d0d0;}
 .shopping-cart thead tr{ border: none !important;}
@@ -1201,7 +1201,7 @@ ul.pgwSlider > li span, .pgwSlider > .ps-list > li span
 }
 .shopping-cart .mdi-action-highlight-remove{ font-size: 25px; color: #383838;}
 .shopping-cart-button {
-  border: 2px solid #26a63c;
+  border: 1px solid;
   color: #26a63c;
   font-size: 12px;
   text-transform: capitalize;
@@ -1213,7 +1213,8 @@ ul.pgwSlider > li span, .pgwSlider > .ps-list > li span
 .shopping-cart .filled-in[type="checkbox"]:checked + label::after{ background: #000; border-color: #000; }
 .margin-right-15{ margin-right: 15px;}
 .shopping-cart-button:hover, .shopping-cart-button:focus {
-  background-color: #26a63c;
+  background-color: #50a253;
+  border-color:transparent;
   color: #fff;
   transition-duration: 0.6s;
   -webkit-transition-duration: 0.6s;
@@ -1419,7 +1420,8 @@ iframe { width: 100%; border: none; }
 
 /*********************************************************** 20 Login Page *************************************************************/
 
-.login-page{ background-color: #fff; padding: 100px 0; overflow: hidden; }
+.login-page{ background-color: whitesmoke; padding: 30px 0; overflow: hidden;width: 70%;
+    margin: auto; }
 .login-page .input-field .prefix ~ input, .login-page .input-field .prefix ~ textarea{ margin: 0;}
 .login-page .input-field label{ margin: 0 0 0 55px !important; font-weight: 400; color: #b0b0b0; font-size: 16px;}
 .login-page .input-field .prefix{
