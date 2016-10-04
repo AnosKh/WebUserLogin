@@ -24,12 +24,13 @@ app.controller('registerCtrl', function($scope, $http, $rootScope) {
 					  "VERIFICATION_CODE": $scope.verification_code				
 					}
 				}).then(function(respone) {
-					 alert("Please go to your mailbox and click on confrimation link")
+					
+					  alert("Please go to your mailbox and click on confrimation link")
 					  $scope.sendMail();
 					  window.location.href = '/';
 				
 					
-		});
+				});
 	}
 	
 	// ======= Generate Universal Unique ID
