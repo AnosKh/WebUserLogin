@@ -78,7 +78,7 @@
 		</div>
 	<div class="login-bwn">
 	   <!-- <input type="submit" value="Sign Up" ng-submit="register()"/> -->
-	   <button name="action" type="button" ng-click="register()">Sign up</button>
+	   <button name="action" type="button" ng-click="register()" onclick="">Sign up</button>
 	</div>
 	</form>
 	<div class="login-bottom">
@@ -93,49 +93,6 @@
 	<div class="logo-strip"></div>
 </div>
     
-<!-- <script type="text/javascript">    
-        $(function() {    	
-        	$("#frmLogin").submit(function(e){
-       		  e.preventDefault();
-       			console.log( $("#frmLogin").serialize() );
-       		
-	       		$.ajax({
-	  	            url: "/login",
-	  	            type: "POST",
-	  	            data: $("#frmLogin").serialize(),
-	  	            success: function(data) {
-	  	            	if(data == "User account is locked"){
-	  	            		alert(data);
-	  	            	}else if(data == "User is disabled"){
-	  	            		alert(data);
-	  	            	}else if(data == "Bad credentials"){
- 	  	            		alert(data);
-	  	            		/* Materialize.toast('<span>Incorrect email or password! please try again!</span><a class=&quot;btn-flat yellow-text&quot; href=&quot;#!&quot;><a>', 5000) */
-	  	            	}else{
-	  	            		/* Materialize.toast('<span>Login Successful</span><a class=&quot;btn-flat yellow-text&quot; href=&quot;#!&quot;><a>', 5000) */
-	  	            		
-	  	            		alert("Logined success. " + data + " " + $("#continueSite").text());
-	  	            		
-	  	            		setCookie("KNONG_DAI_USER_ID", data);
-	  	            		isAuthenticated($("#continueSite").text());
-	  	            	}        	
-	  	            },
-	  	         	error: function(data){
-	  	         		console.log(data);
-	  				}
-	  	        });
-       			
-       		});
-        	
-        	$("#btShowFrmEmail").click(function(){
-        		$("#frmSignInWithEmail").fadeIn(3000);
-        		$(window).scrollTop(450);
-        		$("#email").focus();
-
-        	});
-        	
-        });
-</script> -->
  <script th:src="@{/static/js/angular.min.js}"></script>
    <script th:src="@{/static/js/jquery-min.js}"></script> 
     <script th:src="@{/static/script/knongdai_register.js}"></script>  <!-- Ean Sokchomrern -->

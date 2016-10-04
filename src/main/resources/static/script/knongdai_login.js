@@ -4,7 +4,7 @@ function setCookie(cname, cvalue) {
 	d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
 	var expires = "expires=" + d.toGMTString();
 	document.cookie = cname + "=" + cvalue + "; " + expires+ ";domain=120.136.24.174;"; // domain=localhost";;domain=120.136.24.174
-	alert(expires); 
+//	alert(expires); 
 }
 function getCookie(cname) {
 	var name = cname + "=";

@@ -24,7 +24,7 @@ app.controller('registerCtrl', function($scope, $http, $rootScope) {
 					  "VERIFICATION_CODE": $scope.verification_code				
 					}
 				}).then(function(respone) {
-					 alert("Please go to your mailbox and click on confrimation link")
+					  alert("Please go to your mailbox and click on confrimation link")
 					  $scope.sendMail();
 					  window.location.href = '/';
 				
@@ -86,3 +86,44 @@ app.controller('registerCtrl', function($scope, $http, $rootScope) {
 	// ======= End Send email to verify
 	
 })
+
+
+
+
+function ValidateForm(inputText, inputText1)  
+		{  
+			var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+			if(inputText.value==""){
+				myAlert("Warning! Email can not be empty!");
+				frmLogin.email.focus(); 
+			}
+			else if(inputText1.value==""){
+				myAlert("Warning! Password can not be empty!");
+				frmLogin.password.focus(); 
+			}
+			else if(inputText.value.match(mailformat))  
+			{  
+				return true;  
+			}  
+			else if(!inputText.value.match(mailformat))  
+			{  
+				myAlert("Warning! You have entered an invalid email address!");
+				frmLogin.email.focus();  
+				return false; 
+			}
+		}  
+ function myAlert(msg){
+        	$('#alert-5').text(msg);
+			$('.page-alerts').slideDown();
+		        
+		        //Is autoclosing alert
+		       var delay = 3000;
+		        var timeOut;
+		        if(delay != undefined)
+		        {
+		            clearTimeout(timeOut);
+		            timeOut = window.setTimeout(function() {
+		            		$('.page-alerts').slideUp();
+		                }, delay);
+		        } 
+        }
