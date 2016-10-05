@@ -1,5 +1,8 @@
 package com.knongdai.account.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,19 +24,38 @@ public class AutoLoginController {
 	private UserService userService;
 	
 	@RequestMapping(value = "/auto-login" , method= RequestMethod.GET)
-	public String autoLogin(@RequestParam("user-hash") String userId , @RequestParam(name="continue-site", required=false , defaultValue="http://www.knongdai.com") String continueSite) {
+	public String autoLogin(@RequestParam("user-hash") String userHash , @RequestParam(name="continue-site", required=false , defaultValue="http://www.knongdai.com") String continueSite , HttpServletResponse  response) {
 
-		User user = userService.findUserByUserId(userId);
-
-		System.out.println("Username : " + user.getUsername());
+		try{
 		
-		Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
+			Cookie ck=new Cookie("KD_USER_HASH","");//deleting value of cookie  
+			ck.setMaxAge(0);//changing the maximum age to 0 seconds  
+			response.addCookie(ck);//adding cookie in the response  
+			
+			User user = userService.findUserByUserHash(userHash);
 
-		SecurityContext context = new SecurityContextImpl();
-		context.setAuthentication(authentication);
-
-		SecurityContextHolder.setContext(context);
-
+			if(user != null){
+				System.out.println("Username : " + user.getUsername());
+				
+				Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
+	
+				SecurityContext context = new SecurityContextImpl();
+				context.setAuthentication(authentication);
+	
+				SecurityContextHolder.setContext(context);
+	
+				ck=new Cookie("KD_USER_HASH",user.getUserHash());//deleting value of cookie  
+				ck.setMaxAge(30 * 24 * 60 * 60 * 1000);//the maximum age to 1 month  
+				response.addCookie(ck);//adding cookie in the response  
+				
+			}else{
+				System.out.println("Username not found!" );
+				return "login";
+			}
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		return "redirect:"+continueSite;
 
 	}
