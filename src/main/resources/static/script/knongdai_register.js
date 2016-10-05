@@ -7,6 +7,7 @@ var app = angular.module('myApp', []);
 
 // TODO: VIEW USER FRONT END
 app.controller('registerCtrl', function($scope, $http, $rootScope) {
+	
 	$scope.register = function(){
 		
 		//get Universal Unique ID for new user
@@ -31,6 +32,22 @@ app.controller('registerCtrl', function($scope, $http, $rootScope) {
 				
 					
 				});
+	}
+	
+	
+	// Check email exists or not to avoid duplicate email when register. Ean Sokchomrenr (05/10/2016)
+	$scope.checkEmailExistsOrNot = function(){
+		$http.get("/rest/user/is-email-exists/"+$scope.email).
+		success(function(response){
+			
+			if(response.STATUS==true){
+				alert("You’ve already registered with that email address. Sign in below.")
+			}else{
+				$scope.register();
+			}
+		}).error(function(response){
+			alert("Sorry, your email is invalid")
+		});
 	}
 	
 	// ======= Generate Universal Unique ID

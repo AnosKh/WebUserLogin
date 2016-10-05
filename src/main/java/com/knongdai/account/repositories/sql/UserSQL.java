@@ -108,4 +108,6 @@ public interface UserSQL {
 	// Update password by verification_code. Ean Sokchomrern (20/09/2016)
 	String U_USER_PASSWORD = "UPDATE tbluser SET password = #{password} WHERE verification_code = #{verification_code} ";
 
+	// Check email exists or not. Ean Sokchomrern (05/10/2016)
+	String R_USER_EMAIL_EXISTS = "SELECT COUNT(email) FROM tbluser WHERE email=#{email}";
 }

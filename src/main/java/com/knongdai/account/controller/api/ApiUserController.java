@@ -162,7 +162,7 @@ public class ApiUserController {
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 	
-	// find email address is existed in database or not. Ean Sokchomrern (19/09/2016)
+	// find email address is existed in database or not. If so, return verification code. Ean Sokchomrern (19/09/2016)
 	@RequestMapping(value="/get-verification-code-by-email/{email}", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> getVerificationCodeByEmail(@PathVariable String email){
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -205,4 +205,28 @@ public class ApiUserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
+	
+	// find email address is existed in database or not. If so, return 1 else return 0. Ean Sokchomrern (05/10/2016)
+		@RequestMapping(value="/is-email-exists/{email}", method = RequestMethod.GET)
+		public ResponseEntity<Map<String, Object>> isIntEmailExists(@PathVariable String email){
+			Map<String, Object> map = new HashMap<String, Object>();
+			try{
+				
+				if(userService.isIntEmailExists(email) == 1){
+					
+					map.put("STATUS",true);
+					map.put("MESSAGE","Yes, Email exists in database");
+					map.put("DATA",userService.getVerificationCodeByEmail(email) );
+				} else {
+					map.put("STATUS", false);
+					map.put("MESSAGE", "No, Email does not exist in database");
+				} 
+			} catch(Exception e){
+				map.put("STATUS", false);
+				map.put("MESSAGE","Error");
+				
+				
+			}
+			return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		}
 }

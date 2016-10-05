@@ -79,5 +79,13 @@ public class RestUserController {
 		ResponseEntity<Map> response = rest.exchange(WS_URL + "/user/update-user-password", HttpMethod.PUT , request , Map.class) ;
 		return new ResponseEntity<Map<String, Object>>(response.getBody(), HttpStatus.OK);
 	}	
+	
+	// find email address is existed in database or not. If so, return 1 else return 0. Ean Sokchomrern (05/10/2016)
+	@RequestMapping(value="/rest/user/is-email-exists/{email}", method = RequestMethod.GET)
+	public ResponseEntity<Map<String , Object>> isIntEmailExists(@PathVariable String email){
+		HttpEntity<Object> request = new HttpEntity<Object>(header);
+		ResponseEntity<Map> response = rest.exchange(WS_URL + "/user/is-email-exists/"+email, HttpMethod.GET , request , Map.class) ;
+		return new ResponseEntity<Map<String , Object>>(response.getBody() , HttpStatus.OK);
+	}
 		
 }

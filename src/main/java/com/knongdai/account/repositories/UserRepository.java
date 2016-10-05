@@ -127,4 +127,8 @@ public interface UserRepository {
 	// Update password by verification_code. Ean Sokchomrern (20/09/2016)
 	@Update(UserSQL.U_USER_PASSWORD)
 	public boolean updateUserPassword(UserRegister user);
+	
+	// Check email exists or not. If so, return 1 else return 0. Ean Sokchomrern (05/10/2016)
+	@Select(UserSQL.R_USER_EMAIL_EXISTS)
+	public int isIntEmailExists(String email);
 }
