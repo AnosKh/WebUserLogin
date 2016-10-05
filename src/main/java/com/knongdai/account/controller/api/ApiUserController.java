@@ -146,13 +146,18 @@ public class ApiUserController {
 	public ResponseEntity<Map<String, Object>> insertUserRegister(@RequestBody UserRegister user){
 		Map<String, Object> map = new HashMap<String, Object>();
 		try{
-			if(userService.insertUserRegister(user)){
-				map.put("STATUS",true);
-				map.put("MESSAGE","Insert Successfully");
-			} else {
-				map.put("STATUS", false);
-				map.put("MESSAGE", "Insert Unsuccessfully");
-			} 
+			if(userService.isIntEmailExists(user.getEmail()) != 0){
+				if(userService.insertUserRegister(user)){
+					map.put("STATUS",true);
+					map.put("MESSAGE","Insert Successfully");
+				} else {
+					map.put("STATUS", false);
+					map.put("MESSAGE", "Insert Unsuccessfully");
+				}
+			}else{
+				map.put("STATUS_EMAIL", false);
+				map.put("MESSAGE", "You’ve already registered with that email address.");
+			}
 		} catch(Exception e){
 			map.put("STATUS", false);
 			map.put("MESSAGE","Error");

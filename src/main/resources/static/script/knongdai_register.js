@@ -25,7 +25,7 @@ app.controller('registerCtrl', function($scope, $http, $rootScope) {
 					  "VERIFICATION_CODE": $scope.verification_code				
 					}
 				}).then(function(respone) {
-					 
+					 	
 					  ValidateForm(frmLogin.Username, frmLogin.Email, frmLogin.Re_Email,frmLogin.password);
 					  $scope.sendMail();
 					  
@@ -41,7 +41,7 @@ app.controller('registerCtrl', function($scope, $http, $rootScope) {
 		success(function(response){
 			
 			if(response.STATUS==true){
-				alert("You’ve already registered with that email address. Sign in below.")
+				myAlert("You’ve already registered with that email address. Sign in below.")
 			}else{
 				$scope.register();
 			}
