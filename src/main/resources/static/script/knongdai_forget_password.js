@@ -9,18 +9,21 @@ app.controller('forgetPasswordCtrl', function($scope,$http,$rootScope){
 	$scope.checkUserExists = function(){
 		$http.get("/rest/user/get-verification-code-by-email/"+$scope.email).
 		success(function(response){
-			
 			if(response.STATUS==false){
-				alert("We couldn’t find this email address.");
+				
+				ValidateForm(frmLogin.email);
+				
 			}else{
 				$scope.verification_code = response.DATA;
 				$scope.sendMail();
 			}
 		}).error(function(response){
+			
 			alert(response.DATA);
 			alert(response.MESSAGE);
 			alert(response.STATUS);
 			alert("We couldn’t find this email address.");
+			
 		});
 	}
 	
@@ -59,4 +62,36 @@ $scope.sendMail = function() {
 		
 	}
 });
+
+function ValidateForm(email)  
+{  
+	var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+	if(email.value==""){
+		myAlert("Warning! Email can not be empty!");
+		frmLogin.email.focus(); 
+	}else if(!email.value.match(mailformat))  {  
+		myAlert("Warning! You have entered an invalid email address!");
+		frmLogin.email.focus();  
+	}else{
+		myAlert("We couldn’t find this email address.");
+		
+	}
+}  
+function myAlert(msg){
+		$('#alert-5').addClass("alert alert-warning page-alert");
+	$('#alert-5').text(msg);
+	$('.page-alerts').slideDown();
+        
+        //Is autoclosing alert
+       	var delay = 3000;
+        var timeOut;
+        if(delay != undefined)
+        {
+            clearTimeout(timeOut);
+            timeOut = window.setTimeout(function() {
+            		$('.page-alerts').slideUp();
+                }, delay);
+        } 
+}
+
 	

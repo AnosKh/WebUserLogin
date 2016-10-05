@@ -26,6 +26,31 @@
 	<!--Google Fonts-->
 	<script>var __links = document.querySelectorAll('a');function __linkClick(e) { parent.window.postMessage(this.href, '*');} ;for (var i = 0, l = __links.length; i < l; i++) {if ( __links[i].getAttribute('data-t') == '_blank' ) { __links[i].addEventListener('click', __linkClick, false);}}</script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<style type="text/css">
+		/* @import url('http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css'); */
+
+			/* REQUIRED */
+			.page-alerts {
+			    margin-bottom: 20px;
+			}
+			
+			.page-alerts .page-alert {
+			    border-radius: 0;
+			    margin-bottom: 0;
+			}
+			.alert-warning {
+			    color: #8a6d3b;
+			    background-color: #fcf8e3; 
+			    border-color: #faebcc;
+			}  
+			.alert {
+			    padding: 15px;
+			    margin-bottom: 10px;
+			    border: 1px solid transparent;
+			    border-radius: 4px;
+			} 
+	
+	</style>
 	<script>
 		$(document).ready(function(c) {
 			$('.sinup-close').on('click', function(c){
@@ -40,10 +65,12 @@
    
 </head>
   
-    <body>
-    
+<body>
+    <div class="page-alerts">
+		    <div id="alert-5"></div>
+	</div>
         
-<div class="login">
+	<div class="login">
 	<div class="login-bottom login-bottom-top">
 		<div><img th:src="@{/static/myimages/KA.png}" alt="Khmer Academy Logo" class="img-responsive"></div>
 		<h2>SIGN UP</h2>
@@ -72,13 +99,13 @@
 		<div class="register">
 			<input style="font-size= 14px" type="text" class="user validate" id="name" name="Username" ng-model="username" placeholder="Username"/>
 			<input style="font-size= 14px" type="text" class="email validate" id="email" name="Email" ng-model="email" placeholder="Email"/>
-			<input style="font-size= 14px" type="text" class="email validate" id="re_enter_email" name="Email" ng-model="re_enter_email" placeholder="Re-enter Email"/>
+			<input style="font-size= 14px" type="text" class="email validate" id="re_enter_email" name="Re_Email" ng-model="re_enter_email" placeholder="Re-enter Email"/>
 			<input style="font-size= 14px" type="password" class="lock validate" id="password" name="password" ng-model="password" placeholder="Password"/>
 			
 		</div>
 	<div class="login-bwn">
 	   <!-- <input type="submit" value="Sign Up" ng-submit="register()"/> -->
-	   <button name="action" type="button" ng-click="register()" onclick="">Sign up</button>
+	   <button name="action" type="button" ng-click="register()">Sign up</button>
 	</div>
 	</form>
 	<div class="login-bottom">
@@ -93,54 +120,16 @@
 	<div class="logo-strip"></div>
 </div>
     
- <script th:src="@{/static/js/angular.min.js}"></script>
-   <script th:src="@{/static/js/jquery-min.js}"></script> 
+ 	<script th:src="@{/static/js/angular.min.js}"></script>
+   	<script th:src="@{/static/js/jquery-min.js}"></script> 
     <script th:src="@{/static/script/knongdai_register.js}"></script>  <!-- Ean Sokchomrern -->
     
     <p style="display: none" id="continueSite" th:text="${continueSite}"></p>
     
     
-<script type="text/javascript">
-        
-       
-        
-        $(function() {
-        	
-        	$("#frmLogin").submit(function(e){
-       		
-       		  e.preventDefault();
-       		  
-       			console.log( $("#frmLogin").serialize() );
-       		
-	       		$.ajax({
-	  	            url: "/login",
-	  	            type: "POST",
-	  	            data: $("#frmLogin").serialize(),
-	  	            success: function(data) {
-	  	            	if(data == "User account is locked"){
-	  	            		alert(data);
-	  	            	}else if(data == "User is disabled"){
-	  	            		alert(data);
-	  	            	}else if(data == "Bad credentials"){
-// 	  	            		alert(data);
-	  	            		Materialize.toast('<span>Incorrect email or password! please try again!</span><a class=&quot;btn-flat yellow-text&quot; href=&quot;#!&quot;><a>', 5000)
-	  	            	}else{
-	  	            		Materialize.toast('<span>Login Successful</span><a class=&quot;btn-flat yellow-text&quot; href=&quot;#!&quot;><a>', 5000)
-	  	            		setCookie("KNONG_DAI", data)
-	  	            		if($("#continueSite").text() != ""){
-	  	            			location.href=$("#continueSite").text();
-	  	            		}
-	  	            		alert("Logined success. " + data + " " + $("continueSite").text());
-	  	            	}
-	  	            	
-	  	            },
-	  	         	error: function(data){
-	  	         		console.log(data);
-	  				}
-	  	        });
-       			
-       		});
-        });
-        </script>
-    </body>
+	<script type="text/javascript">
+			$('.page-alerts').hide();
+      
+     </script>
+ </body>
 </html>

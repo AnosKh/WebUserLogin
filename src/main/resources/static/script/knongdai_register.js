@@ -24,10 +24,10 @@ app.controller('registerCtrl', function($scope, $http, $rootScope) {
 					  "VERIFICATION_CODE": $scope.verification_code				
 					}
 				}).then(function(respone) {
-
-					  alert("Please go to your mailbox and click on confrimation link")
+					 
+					  ValidateForm(frmLogin.Username, frmLogin.Email, frmLogin.Re_Email,frmLogin.password);
 					  $scope.sendMail();
-					  window.location.href = '/';
+					  
 				
 					
 				});
@@ -91,34 +91,50 @@ app.controller('registerCtrl', function($scope, $http, $rootScope) {
 
 
 
-function ValidateForm(inputText, inputText1)  
+function ValidateForm(username,email,re_email,password)  
 		{  
 			var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
-			if(inputText.value==""){
-				myAlert("Warning! Email can not be empty!");
-				frmLogin.email.focus(); 
+			if(username.value==""){
+				myAlert("Warning! Username can not be empty!");
+				frmLogin.Username.focus(); 
 			}
-			else if(inputText1.value==""){
+			else if(email.value==""){
+				myAlert("Warning! Email can not be empty!");
+				frmLogin.Email.focus(); 
+			} 
+			else if(!email.value.match(mailformat))  
+			{  
+				myAlert("Warning! You have entered an invalid email address!");
+				frmLogin.Email.focus();  
+				
+			}
+			else if(re_email.value==""){
+				myAlert("Warning! Re-enter Email can not be empty!");
+				frmLogin.Re_Email.focus(); 
+			} 
+			else if(email.value!=re_email.value)  
+			{  
+				myAlert("Warning! Email address did not match !");
+				frmLogin.Re_Email.focus();  
+			}
+			else if(password.value==""){
 				myAlert("Warning! Password can not be empty!");
 				frmLogin.password.focus(); 
 			}
-			else if(inputText.value.match(mailformat))  
-			{  
-				return true;  
-			}  
-			else if(!inputText.value.match(mailformat))  
-			{  
-				myAlert("Warning! You have entered an invalid email address!");
-				frmLogin.email.focus();  
-				return false; 
+			else{
+				myAlert("Please go to your mailbox and click on confrimation link");
+				window.setTimeout(function() {
+					window.location.href = '/';
+                }, 3500);
 			}
 		}  
  function myAlert(msg){
+	 		$('#alert-5').addClass("alert alert-warning page-alert");
         	$('#alert-5').text(msg);
 			$('.page-alerts').slideDown();
 		        
 		        //Is autoclosing alert
-		       var delay = 3000;
+		       	var delay = 3000;
 		        var timeOut;
 		        if(delay != undefined)
 		        {

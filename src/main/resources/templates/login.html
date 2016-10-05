@@ -66,7 +66,7 @@
 	  
     <body>
         <div class="page-alerts">
-		    <div class="alert alert-warning page-alert" id="alert-5">
+		    <div id="alert-5">
 		    </div>
 		</div>
     
@@ -162,7 +162,7 @@
 	  	            		myAlert("Incorrect email or password! please try again!");
 	  	            		ValidateForm(frmLogin.email,frmLogin.password);
 	  	            	}else{
-	  	            		alert("Logined success. " + data + " " + $("#continueSite").text());
+	  	            		myAlert("Logined success. " + data + " " + $("#continueSite").text());
 	  	            		setCookie("KD_USER_HASH", data);
 	  	            		isAuthenticated($("#continueSite").text());
 	  	            	}
@@ -199,6 +199,7 @@
 			}
 		}  
         function myAlert(msg){
+        	$('#alert-5').addClass("alert alert-warning page-alert");
         	$('#alert-5').text(msg);
 			$('.page-alerts').slideDown();
 		        
