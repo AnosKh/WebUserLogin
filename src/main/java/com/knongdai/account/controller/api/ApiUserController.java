@@ -146,7 +146,7 @@ public class ApiUserController {
 	public ResponseEntity<Map<String, Object>> insertUserRegister(@RequestBody UserRegister user){
 		Map<String, Object> map = new HashMap<String, Object>();
 		try{
-			if(userService.isIntEmailExists(user.getEmail()) != 0){
+			if(userService.isIntEmailExists(user.getEmail()) == 0){ //i.e this email does not exists yet
 				if(userService.insertUserRegister(user)){
 					map.put("STATUS",true);
 					map.put("MESSAGE","Insert Successfully");
@@ -155,7 +155,7 @@ public class ApiUserController {
 					map.put("MESSAGE", "Insert Unsuccessfully");
 				}
 			}else{
-				map.put("STATUS_EMAIL", false);
+				map.put("STATUS", false);
 				map.put("MESSAGE", "You’ve already registered with that email address.");
 			}
 		} catch(Exception e){
@@ -211,27 +211,5 @@ public class ApiUserController {
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 	
-	// find email address is existed in database or not. If so, return 1 else return 0. Ean Sokchomrern (05/10/2016)
-		@RequestMapping(value="/is-email-exists/{email}", method = RequestMethod.GET)
-		public ResponseEntity<Map<String, Object>> isIntEmailExists(@PathVariable String email){
-			Map<String, Object> map = new HashMap<String, Object>();
-			try{
-				
-				if(userService.isIntEmailExists(email) == 1){
-					
-					map.put("STATUS",true);
-					map.put("MESSAGE","Yes, Email exists in database");
-					map.put("DATA",userService.getVerificationCodeByEmail(email) );
-				} else {
-					map.put("STATUS", false);
-					map.put("MESSAGE", "No, Email does not exist in database");
-				} 
-			} catch(Exception e){
-				map.put("STATUS", false);
-				map.put("MESSAGE","Error");
-				
-				
-			}
-			return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-		}
+	
 }

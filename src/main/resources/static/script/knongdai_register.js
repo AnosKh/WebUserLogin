@@ -24,31 +24,33 @@ app.controller('registerCtrl', function($scope, $http, $rootScope) {
 					  "GENDER": $scope.gender,
 					  "VERIFICATION_CODE": $scope.verification_code				
 					}
-				}).then(function(respone) {
-					 	
-					  ValidateForm(frmLogin.Username, frmLogin.Email, frmLogin.Re_Email,frmLogin.password);
-					  $scope.sendMail();
-					  
-				
-					
-				});
+				}).success(function(data, status, headers, config) {
+					  if(data.STATUS==false){
+						  myAlert(data.MESSAGE);
+					  }else{
+						  ValidateForm(frmLogin.Username, frmLogin.Email, frmLogin.Re_Email,frmLogin.password);
+						  $scope.sendMail();
+					  }	  
+				}).error(function(data, status, headers, config){
+			        myAlert(data.MESSAGE);
+			    });
 	}
 	
 	
 	// Check email exists or not to avoid duplicate email when register. Ean Sokchomrenr (05/10/2016)
-	$scope.checkEmailExistsOrNot = function(){
-		$http.get("/rest/user/is-email-exists/"+$scope.email).
-		success(function(response){
-			
-			if(response.STATUS==true){
-				myAlert("You’ve already registered with that email address. Sign in below.")
-			}else{
-				$scope.register();
-			}
-		}).error(function(response){
-			alert("Sorry, your email is invalid")
-		});
-	}
+//	$scope.checkEmailExistsOrNot = function(){
+//		$http.get("/rest/user/is-email-exists/"+$scope.email).
+//		success(function(response){
+//			
+//			if(response.STATUS==true){
+//				myAlert("You’ve already registered with that email address. Sign in below.")
+//			}else{
+//				$scope.register();
+//			}
+//		}).error(function(response){
+//			alert("Sorry, your email is invalid")
+//		});
+//	}
 	
 	// ======= Generate Universal Unique ID
 	$scope.generateUUID = function() {
