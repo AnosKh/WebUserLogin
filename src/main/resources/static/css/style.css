@@ -1381,7 +1381,7 @@ textarea.materialize-textarea:focus:not([readonly]) {
 .input-field .prefix.active{ color: #ff4181;}
 .contact-detail .shopping-cart-button{ font-size: 14px;}
 .input-field .prefix{  font-size: 20px; right: 0; top: 15px; cursor: default;}
-.input-field label{ top: 1.1rem; font-weight: lighter; color: #444;}
+.input-field label{ top: 0.1rem; font-weight: lighter; color: #444;}
 
 /*********************************************************** 19 Contact Style 2 ********************************************************/
 
@@ -1423,7 +1423,7 @@ iframe { width: 100%; border: none; }
 .login-page{ background-color: whitesmoke; padding: 30px 0; overflow: hidden;width: 70%;
     margin: auto; }
 .login-page .input-field .prefix ~ input, .login-page .input-field .prefix ~ textarea{ margin: 0;}
-.login-page .input-field label{ margin: 0 0 0 55px !important; font-weight: 400; color: #b0b0b0; font-size: 16px;}
+.login-page .input-field label{ margin: 10px 0 0 55px !important; font-weight: 400; color: #b0b0b0; font-size: 12px;}
 .login-page .input-field .prefix{
   background-color: #26a63c;
   color: #fff;

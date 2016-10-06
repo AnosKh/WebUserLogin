@@ -25,10 +25,11 @@ app.controller('registerCtrl', function($scope, $http, $rootScope) {
 					  "VERIFICATION_CODE": $scope.verification_code				
 					}
 				}).success(function(data, status, headers, config) {
+					  
 					  if(data.STATUS==false){
-						  myAlert(data.MESSAGE);
-					  }else{
 						  ValidateForm(frmLogin.Username, frmLogin.Email, frmLogin.Re_Email,frmLogin.password);
+					  }else{
+						  myAlert("Please go to your mailbox and click on confrimation link");
 						  $scope.sendMail();
 					  }	  
 				}).error(function(data, status, headers, config){
@@ -141,10 +142,8 @@ function ValidateForm(username,email,re_email,password)
 				frmLogin.password.focus(); 
 			}
 			else{
-				myAlert("Please go to your mailbox and click on confrimation link");
-				window.setTimeout(function() {
-					window.location.href = '/';
-                }, 3500);
+				myAlert("You’ve already registered with that email address. Sign in below.");
+				
 			}
 		}  
  function myAlert(msg){
