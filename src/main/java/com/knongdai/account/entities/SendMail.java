@@ -1,6 +1,7 @@
 package com.knongdai.account.entities;
 
 public class SendMail {
+	
 	private String to;
 	private String subject;
 	private String body;

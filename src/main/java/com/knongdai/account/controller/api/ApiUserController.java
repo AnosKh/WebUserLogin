@@ -23,6 +23,9 @@ import com.knongdai.account.services.UserService;
 import com.knongdai.account.utilities.HttpCode;
 import com.knongdai.account.utilities.HttpMessage;
 import com.knongdai.account.utilities.ResponseRecord;
+import com.knongdai.account.utilities.UtilSendMail;
+
+import scala.annotation.meta.setter;
 
 @RestController
 @RequestMapping("/knongdai/user")
@@ -121,22 +124,30 @@ public class ApiUserController {
 	}
 	
 	// Send mail
-	@Autowired
-	private SmtpMailSender smtpMailSender;	
+//	@Autowired
+//	private SmtpMailSender smtpMailSender;	
 	@RequestMapping(value="/send-mail",method=RequestMethod.POST)	
 	public ResponseEntity<Map<String,Object>> sendMail(@RequestBody SendMail sendMail) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		try{
-		smtpMailSender.send(
-				sendMail.getTo(), 
-				sendMail.getSubject(), 
-				sendMail.getBody());
-				// mail is sent
+			if(new UtilSendMail().sendEmailToUser(sendMail)){
 				map.put("MESSAGE", "Sending mail successfully");
 				map.put("STATUS", true);
-		} catch(MessagingException ex){
+			}else{
+				map.put("MESSAGE", "Sending mail not successfully");
+				map.put("STATUS", false);
+			}
+			/*smtpMailSender.send(
+				sendMail.getTo(), 
+				sendMail.getSubject(), 
+				sendMail.getBody());*/
+				// mail is sent
+				
+				System.out.println("Send Email");
+		} catch(Exception ex){
 				map.put("MESSAGE", "Sending mail unsuccessfully");
 				map.put("STATUS", false);
+				ex.printStackTrace();
 		}
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}

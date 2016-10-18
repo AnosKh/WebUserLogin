@@ -36,6 +36,10 @@
      <!-- Jquery -->
     <script th:src="@{/static/js/jquery-min.js}"></script>
     <script th:src="@{/static/script/knongdai_login.js}"></script>
+    
+   		  <script  th:src="@{/static/script/sweet_alert/sweetalert-dev.js}"></script>
+		  <link rel="stylesheet" th:href="@{/static/script/sweet_alert/sweetalert.css}">
+    
     <style>
     	/* @import url('http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css'); */
 
@@ -137,6 +141,7 @@
 	<p>One KnongDai account for everything in KnongDai</p>
 	<div class="logo-strip"></div>
 </div>
+  
     
 <script type="text/javascript">
 		
@@ -149,31 +154,46 @@
        		  
        			console.log( $("#frmLogin").serialize() );
        		
-	       		$.ajax({
-	  	            url: "/login",
-	  	            type: "POST",
-	  	            data: $("#frmLogin").serialize(),
-	  	            success: function(data) {
-	  	            	if(data == "User account is locked"){
-	  	            		myAlert(data);
-	  	            	}else if(data == "User is disabled"){
-	  	            		myAlert(data);
-	  	            	}else if(data == "Bad credentials"){
-	  	            		myAlert("Incorrect email or password! please try again!");
-	  	            		ValidateForm(frmLogin.email,frmLogin.password);
-	  	            	}else{
-	  	            		myAlert("Logined success. " + data + " " + $("#continueSite").text());
-	  	            		setCookie("KD_USER_HASH", data);
-	  	            		isAuthenticated($("#continueSite").text());
-	  	            	}
-	  	            	
-	  	            },
-	  	         	error: function(data){
-	  	         		console.log(data);
-	  				}
-	  	        });
+       			swal({   
+	              		title: "Login",   
+	              		text: "",  
+	              		type: "info",   showCancelButton: true,   
+	              		closeOnConfirm: false,   
+	              		showLoaderOnConfirm: true, 
+	            }, function(){   
+		            	$.ajax({
+			  	            url: "/login",
+			  	            type: "POST",
+			  	            data: $("#frmLogin").serialize(),
+			  	            success: function(data) {
+			  	            	if(data == "Inactive"){
+			  	            		myAlert("Your account is inactive. Please go to your mailbox and click on confrimation link to active your account!");
+			  	            	}else if(data == "User account is locked"){
+			  	            		myAlert(data);
+			  	            	}else if(data == "User is disabled"){
+			  	            		myAlert(data);
+			  	            	}else if(data == "Bad credentials"){
+			  	            		myAlert("Incorrect email or password! please try again!");
+			  	            		ValidateForm(frmLogin.email,frmLogin.password);
+			  	            	}else{
+			  	            		myAlert("Logined success. " + data + " " + $("#continueSite").text());
+			  	            		//swal("Logined success", "", "success")
+			  	            		setCookie("KD_USER_HASH", data);
+			  	            		isAuthenticated($("#continueSite").text());
+			  	            	}
+			  	            },
+			  	         	error: function(data){
+			  	         		console.log(data);
+			  				}
+			  	        });
+	              		
+	            });
+       			
+	       		
        			
        		});
+        	
+        	
         	
         });
         function ValidateForm(inputText, inputText1)  
@@ -204,7 +224,7 @@
 			$('.page-alerts').slideDown();
 		        
 		        //Is autoclosing alert
-		       var delay = 3000;
+		       var delay = 5000;
 		        var timeOut;
 		        if(delay != undefined)
 		        {
@@ -216,5 +236,21 @@
         }
         
         </script>
+        
+        
+        <script>
+   		 $(document).ready(function(){
+   			 setTimeout(function(){ 
+				(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+					(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+					m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+					})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+					ga('create', 'UA-58585702-1', 'auto');
+					ga('send', 'pageview');
+   			 }, 5000);
+   		 });
+		</script>
+		
+		
     </body>
 </html>

@@ -75,7 +75,7 @@ app.controller('registerCtrl', function($scope, $http, $rootScope) {
 		
 		var kh_msg = "សូមស្វាគមន៍, \r\n"
 				+ "គណនីរបស់អ្នកត្រូវបានបង្កើត⁣។ ដើម្បីដំនើរការ⁣ សូមចុចលើតំណរភ្អាប់ខាងក្រោម៖\r\n"
-				+ "http://localhost:2016/welcome/confirm/"
+				+ "http://login.knongdai.com/welcome/confirm/"
 				+ $scope.verification_code
 				+ "\r\n"				
 				+ "រីករាយក្នុងការប្រើប្រាស់សេវាកម្មរបស់យើងខ្ញំុ\r\n\r\n";
@@ -84,7 +84,7 @@ app.controller('registerCtrl', function($scope, $http, $rootScope) {
 				+ "Your account "
 				+ $scope.email
 				+ " has been created. To activate it, please confirm your email address: "
-				+ "http://localhost:2016/welcome/confirm/"
+				+ "http://login.knongdai.com/welcome/confirm/"
 				+ $scope.verification_code
 				+ "\r\n" + "Have a great day.";
 		var msg = kh_msg + en_msg;

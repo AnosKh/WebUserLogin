@@ -33,14 +33,14 @@ $scope.sendMail = function() {
 		$("#myLoading").show();
 		var kh_msg = "សូមស្វាគមន៍\r\n"
 				+ "ដើម្បីផ្លាស់ប្តូរលេខសំងាត់​ សូមចុចតំណភ្អាប់ខាងក្រោម\r\n"
-				+ "http://localhost:2016/password/reset/"
+				+ "http://login.knongdai.com/password/reset/"
 				+ $scope.verification_code
 				+ "\r\n"				
 				+ "រីករាយក្នុងការប្រើប្រាស់សេវាកម្មរបស់យើងខ្ញំុ\r\n\r\n";
 
 		var en_msg = "Welcome,\r\n"
 				+ "To reset your password, please click on the link below "				
-				+ "http://localhost:2016/password/reset/"
+				+ "http://login.knongdai.com/password/reset/"
 				+ $scope.verification_code
 				+ "\r\n" + "Have a great day.";
 		var msg = kh_msg + en_msg;
