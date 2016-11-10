@@ -3,7 +3,7 @@ function setCookie(cname, cvalue) {
 	var d = new Date();
 	d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
 	var expires = "expires=" + d.toGMTString();
-	document.cookie = cname + "=" + cvalue + "; " + expires+ ";domain=knongdai.com";     // localhost"; //;domain=120.136.24.174  ;domain=120.136.24.174;"
+	document.cookie = cname + "=" + cvalue + "; " + expires+ ";domain=120.136.24.172";     // localhost"; //;domain=knongdai.com  ;domain=120.136.24.174;"
 }
 function getCookie(cname) {
 	var name = cname + "=";

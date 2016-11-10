@@ -150,48 +150,43 @@
         $(function() {
         	
         	$("#frmLogin").submit(function(e){
-       		  e.preventDefault();
-       		  
-       			console.log( $("#frmLogin").serialize() );
-       		
-       			swal({   
-	              		title: "Login",   
-	              		text: "",  
-	              		type: "info",   showCancelButton: true,   
-	              		closeOnConfirm: false,   
-	              		showLoaderOnConfirm: true, 
-	            }, function(){   
-		            	$.ajax({
-			  	            url: "/login",
-			  	            type: "POST",
-			  	            data: $("#frmLogin").serialize(),
-			  	            success: function(data) {
-			  	            	if(data == "Inactive"){
-			  	            		myAlert("Your account is inactive. Please go to your mailbox and click on confrimation link to active your account!");
-			  	            	}else if(data == "User account is locked"){
-			  	            		myAlert(data);
-			  	            	}else if(data == "User is disabled"){
-			  	            		myAlert(data);
-			  	            	}else if(data == "Bad credentials"){
-			  	            		myAlert("Incorrect email or password! please try again!");
-			  	            		ValidateForm(frmLogin.email,frmLogin.password);
-			  	            	}else{
-			  	            		myAlert("Logined success. " + data + " " + $("#continueSite").text());
-			  	            		//swal("Logined success", "", "success")
-			  	            		setCookie("KD_USER_HASH", data);
-			  	            		isAuthenticated($("#continueSite").text());
-			  	            	}
-			  	            },
-			  	         	error: function(data){
-			  	         		console.log(data);
-			  				}
-			  	        });
-	              		
-	            });
-       			
-	       		
-       			
-       		});
+         		  e.preventDefault();
+         		  
+         			console.log( $("#frmLogin").serialize() );
+         		
+         			   
+  		            	$.ajax({
+  			  	            url: "/login",
+  			  	            type: "POST",
+  			  	            data: $("#frmLogin").serialize(),
+  			  	            success: function(data) {
+  			  	            	if(data == "Inactive"){
+  			  	            		myAlert("Your account is inactive. Please go to your mailbox and click on confrimation link to active your account!");
+  			  	            	}else if(data == "User account is locked"){
+  			  	            		myAlert(data);
+  			  	            	}else if(data == "User is disabled"){
+  			  	            		myAlert(data);
+  			  	            	}else if(data == "Bad credentials"){
+  			  	            		myAlert("Incorrect email or password! please try again!");
+  									ValidateForm(frmLogin.email,frmLogin.password);
+  									
+  			  	            	}else{
+  			  	            		myAlert("Logined success. " + data + " " + $("#continueSite").text());
+  			  	            		swal({   title: "Logined success.!",   text: "It will close in 2 seconds.",   timer: 2000,   showConfirmButton: false });
+  									setCookie("KD_USER_HASH", data);
+  			  	            		isAuthenticated($("#continueSite").text());
+  			  	            	}
+  			  	            },
+  			  	         	error: function(data){
+  			  	         		console.log(data);
+  			  				}
+  			  	        });
+  	              		
+  	            
+         			
+  	       		
+         			
+         		});
         	
         	
         	
