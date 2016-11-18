@@ -61,11 +61,27 @@
 		});
 	</script>
     
-   
+   <script th:src="@{/static/script/knongdai_login.js}"></script>
    
 </head>
   
 <body>
+
+		<p style="display: none" id="continueSite" th:text="${continueSite}"></p>
+    
+	     <div sec:authorize="isAnonymous()">
+		  		<script type="text/javascript"> 
+		  			isAnonymous($("#continueSite").text());
+				</script>
+		 </div>
+		  
+		 <div sec:authorize="isAuthenticated()">
+		  		<script type="text/javascript"> 
+		  			isAuthenticated($("#continueSite").text());
+				</script>
+		  </div>
+		  
+		  
     <div class="page-alerts">
 		    <div id="alert-5"></div>
 	</div>
