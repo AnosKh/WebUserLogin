@@ -3,7 +3,7 @@ function setCookie(cname, cvalue) {
 	var d = new Date();
 	d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
 	var expires = "expires=" + d.toGMTString();
-	document.cookie = cname + "=" + cvalue + "; " + expires+ ";domain=knongdai.com";     // localhost"; //;domain=knongdai.com  ;domain=120.136.24.174;"
+	document.cookie = cname + "=" + cvalue + "; " + expires+ ";domain=knongdai.com;path=/";     // localhost"; //;domain=knongdai.com  ;domain=120.136.24.174;"
 }
 function getCookie(cname) {
 	var name = cname + "=";
@@ -30,10 +30,14 @@ function isAnonymous(continueSite) {
 function isAuthenticated(continueSite){
 	var USER_HASH = getCookie("KD_USER_HASH");
 	if(USER_HASH != ""){
-		if( continueSite != ""){
+		if( continueSite != ""){ 
 			location.href = continueSite+"/auto-login?user-hash="+USER_HASH+"&continue-site="+continueSite;
 		}else{
 			location.href = "http://www.knongdai.com/";
 		}
 	}
+}
+
+function deleteCookie() {
+	document.cookie = "KD_USER_HASH=;expires=0;domain=knongdai.com;path=/";
 }

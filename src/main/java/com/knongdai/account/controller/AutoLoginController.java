@@ -1,7 +1,9 @@
 package com.knongdai.account.controller;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -76,6 +79,31 @@ public class AutoLoginController {
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}*/
 	
+	/*@RequestMapping(value = "/kd_logout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request,HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null){    
+		      new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+		handleLogOutResponse(response,request);
+		return "redirect:http://login.knongdai.com";
+	}
+	
+	 
+	 * This method would edit the cookie information and make JSESSIONID empty
+	 * while responding to logout. This would further help in order to. This would help
+	 * to avoid same cookie ID each time a person logs in
+	 * @param response
+	 
+	private void handleLogOutResponse(HttpServletResponse response,HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+		for (Cookie cookie : cookies) {
+			cookie.setMaxAge(0);
+			cookie.setValue(null);
+			cookie.setPath("/");
+			response.addCookie(cookie);
+		}
+	}*/
 	
 	
 	

@@ -77,17 +77,15 @@
     	<p style="display: none" id="continueSite" th:text="${continueSite}"></p>
     
 	     <div sec:authorize="isAnonymous()">
-		  		<script type="text/javascript"> 
-		  			isAnonymous($("#continueSite").text());
-				</script>
+	     
+	     <p>Hello
+<!-- 		  		<script type="text/javascript">  -->
+// 		  			isAnonymous($("#continueSite").text());
+<!-- 				</script> -->
+</p>
 		 </div>
 		  
-		 <div sec:authorize="isAuthenticated()">
-		  		<script type="text/javascript"> 
-		  			isAuthenticated($("#continueSite").text());
-				</script>
-		  </div>
-	  
+		
     
 <div class="login">
 	<div class="login-bottom login-bottom-top">
@@ -172,8 +170,14 @@
   									
   			  	            	}else{
   			  	            		myAlert("Logined success. " + data + " " + $("#continueSite").text());
-  			  	            		swal({   title: "Logined success.!",   text: "It will close in 2 seconds.",   timer: 2000,   showConfirmButton: false });
-  									setCookie("KD_USER_HASH", data);
+  			  	            		swal({   
+  			  	            			title: "Logined success.!",   
+  			  	            			text: "It will close in 2 seconds.",   
+  			  	            			timer: 2000,  
+										showConfirmButton: false 
+									});
+  									alert(data);
+  			  	            		setCookie("KD_USER_HASH", data);
   			  	            		isAuthenticated($("#continueSite").text());
   			  	            	}
   			  	            },
