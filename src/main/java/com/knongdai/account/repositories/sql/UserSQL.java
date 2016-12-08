@@ -110,4 +110,31 @@ public interface UserSQL {
 
 	// Check email exists or not. Ean Sokchomrern (05/10/2016)
 	String R_USER_EMAIL_EXISTS = "SELECT COUNT(email) FROM tbluser WHERE email=#{email}";
+	
+	String C_USER_REGISTER_WITH_SCOIAL = " INSERT INTO tbluser (userid, email, username, password, gender, registerdate, status , userimageurl, sc_type , sc_fb_id , signup_with) "+ 
+			" VALUES(nextval('seq_user'), #{email}, #{username}, #{password}, #{gender}, now(),'1' , #{userImageUrl} , #{socialType} , #{socialId} , #{signUpWith} ) "; 
+	
+	
+	String R_USER_BY_EMAIL_AND_PASSWORD="SELECT"
+			+ "		U.userid,"
+			+ " 	U.email,"
+			+ " 	U.gender,"
+			+ " 	U.dateofbirth,"
+			+ " 	U.phonenumber,"
+			+ " 	U.registerdate,"
+			+ " 	U.userimageurl,"
+			+ " 	U.point,"
+			+ "		U.universityid,"
+			+ " 	U.departmentid,"
+			+ "     U.user_hash"
+			+ " FROM"
+			+ " 	tbluser U"
+			+ " WHERE"
+			+ " 	U.email = #{email} AND U.password = #{password} AND status = '1'";
+	
+	String C_USER_REGISTER_MOBILE = " INSERT INTO tbluser (userid, email, username, password, gender, registerdate, status , userimageurl,  signup_with , verification_code) "+ 
+			" VALUES(nextval('seq_user'), #{email}, #{username}, #{password}, #{gender}, now(),'1' , #{userImageUrl} ,  #{signUpWith} , #{verification_code} ) "; 
+	
+
+
 }

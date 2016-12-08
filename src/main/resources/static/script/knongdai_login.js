@@ -1,17 +1,17 @@
 
 function setCookie(cname, cvalue) {
 	var d = new Date();
-	d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
+	d.setTime(d.getTime() + ( /*DAY*/1 * 24 * 60 * 60 * 1000));
 	var expires = "expires=" + d.toGMTString();
 	
 	var domain =  window.location.hostname;
 	
-	if( domain.substr(domain.lastIndexOf('.'),4) == 'com'){
+	/*if( domain.substr(domain.lastIndexOf('.'),4) == 'com'){
 		domain = "knongdai.com";
 	} else{
 		domain = "khmeracademy.org";
-	}
-	
+	}*/
+	domain = "knongdai.com";
 	document.cookie = cname + "=" + cvalue + "; " + expires+ ";domain="+domain+";path=/";     // localhost"; //;domain=knongdai.com  ;domain=120.136.24.174;"
 }
 function getCookie(cname) {

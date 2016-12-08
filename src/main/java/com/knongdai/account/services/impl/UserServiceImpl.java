@@ -6,7 +6,11 @@ import org.springframework.stereotype.Service;
 
 import com.knongdai.account.entities.User;
 import com.knongdai.account.entities.UserRegister;
+import com.knongdai.account.entities.forms.FrmSocailUser;
+import com.knongdai.account.entities.forms.FrmUserRegister;
+import com.knongdai.account.entities.forms.UserInfo;
 import com.knongdai.account.entities.forms.UserLogin;
+import com.knongdai.account.entities.forms.UserMobileLogin;
 import com.knongdai.account.repositories.UserRepository;
 import com.knongdai.account.services.UserService;
 import com.knongdai.account.utilities.Encryption;
@@ -66,6 +70,30 @@ public class UserServiceImpl implements UserService {
 	public int isIntEmailExists(String email) {
 		// TODO Auto-generated method stub
 		return userRepository.isIntEmailExists(email);
+	}
+
+	@Override
+	public boolean insertUserWithScoial(FrmSocailUser user) {
+		// TODO Auto-generated method stub
+		return userRepository.insertUserWithScoial(user);
+	}
+
+	@Override
+	public UserInfo findUserByUserEmailAndPassword(UserMobileLogin userLogin) {
+		// TODO Auto-generated method stub
+		return userRepository.findUserByUserEmailAndPassword(userLogin);
+	}
+
+	@Override
+	public boolean insertUserMobile(FrmUserRegister user) {
+		// TODO Auto-generated method stub
+		return userRepository.insertUserMobile(user);
+	}
+
+	@Override
+	public UserInfo findUserByUserIdMobile(int userId) {
+		// TODO Auto-generated method stub
+		return userRepository.findUserByUserIdMobile(userId);
 	}
 
 

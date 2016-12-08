@@ -83,7 +83,7 @@ form {
   text-align: center;
 }
 .login input[type="submit"] {
-  background: #50a253;
+  background: green;
   color: #FFF;
   font-size: 16px;
   font-weight: 400;
@@ -347,6 +347,17 @@ label.checkbox {
 .button a.go:hover{
   background:#C74534;
 }
+
+
+.button a.ka {
+ 	 background:green;
+ 	 margin:0;
+ 	 float: left;
+}
+.button a.ka:hover{
+ 	 background:#50a253;
+}
+
 i.anc-tw {
   background: url(../images/twitter.png)no-repeat 10px 9px #1CA4D6;
   width: 26px;
@@ -368,6 +379,15 @@ float: left;
 }
 i.anc-go {
   background: url(../images/google.png)no-repeat 9px 9px #C74534;
+  width: 26px;
+  height: 19px;
+  display: inline-block;
+  padding: 10px 6px;
+ float: left;
+  border-radius: 4px 0px 0px 4px;
+}
+i.khmeracademy {
+  background: url(../images/khmeracademy.png)no-repeat 9px 9px green;
   width: 26px;
   height: 19px;
   display: inline-block;
