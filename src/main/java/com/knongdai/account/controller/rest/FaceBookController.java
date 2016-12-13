@@ -69,6 +69,9 @@ public class FaceBookController {
 	  
 	  private static final Token EMPTY_TOKEN = null;
 	  
+	  private static String continueSite;
+	  private static String domain;
+	  
 	  @Autowired
 	  private HttpHeaders header;
 		
@@ -96,7 +99,7 @@ public class FaceBookController {
 	  private static final String QUERY = "?fields=id,name,first_name,last_name,gender,email";
 
 	  @RequestMapping(value ="/signin", method = RequestMethod.GET)
-	  public void signin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	  public void signin(HttpServletRequest request, HttpServletResponse response , @RequestParam("continue-site") String continueSiteParam) throws IOException {
 		 logger.debug("signin");
 
 		 System.out.println(YOUR_API_KEY);
@@ -119,7 +122,31 @@ public class FaceBookController {
 	      .build();
 
 	    String redirectURL = service.getAuthorizationUrl(EMPTY_TOKEN);
+	    
 	    logger.info("redirectURL:{}", redirectURL);
+
+	    domain = continueSiteParam;
+	    
+	    System.out.println("continueSiteParam =====>>>>> " +  continueSiteParam);	    
+	    
+	    if(!continueSiteParam.equalsIgnoreCase("")){
+	    	
+		    System.out.println("lastIndexOf =====>>>>> " +  domain.substring(domain.lastIndexOf(".")));	    
+	    	
+	    	if(domain.substring(domain.lastIndexOf(".") , domain.lastIndexOf(".") +4 ).equalsIgnoreCase(".com")){
+				domain = "knongdai.com";
+			} else{
+				domain = "khmeracademy.org";
+			}
+	    	
+		    System.out.println("DOMAIN =====>>>>> " + domain + "  |  continueSite " +  continueSite + "   |   " +  domain.substring(domain.lastIndexOf(".")));	    
+		    
+		    continueSite = continueSiteParam;
+		    
+	    }else{
+	    	domain = "knongdai.com";
+	    	continueSite = "http://www.knongdai.com";
+	    }
 
 	    response.sendRedirect(redirectURL);
 	  }
@@ -127,15 +154,16 @@ public class FaceBookController {
 	  @RequestMapping(value ="/callback", method = RequestMethod.GET)
 	  public String callback(@RequestParam(value = "code", required = false) String code,
 	      @RequestParam(value = "state", required = false) String state,
-	      HttpServletRequest request, HttpServletResponse response,
-	      @RequestParam(name="continue-site", required=false ) String continueSite ) {
+	      HttpServletRequest request, HttpServletResponse response) {
 	    logger.debug("callback");
 	    logger.info("code:{}", code);
 	    logger.info("state:{}", state);
 
 	    String secretState = (String) request.getSession().getAttribute("SECRET_STATE");
 	    String userHash = "";
-
+	    
+	    System.out.println("callback : " + domain);
+	    
 	    if (secretState.equals(state)) {
 	      logger.info("State value does match!");
 	    } else {
@@ -191,14 +219,18 @@ public class FaceBookController {
 	    	System.out.println(userMap);
 	    	System.out.println("1 Email : " + (String) userMap.get("EMAIL"));
 	    	
-	    	Cookie ck=new Cookie("KD_USER_HASH","");//deleting value of cookie  
+	    	Cookie ck=new Cookie("KD_USER_HASH",null);//deleting value of cookie  
 			ck.setMaxAge(0);//changing the maximum age to 0 seconds 
 			ck.setPath("/");
-			ck.setDomain("knongdai.com");
+			ck.setDomain(domain);
 			response.addCookie(ck);//adding cookie in the response  
 			
 			if(user != null){
 				System.out.println("2 Email : " + user.getEmail());
+				
+				if(!continueSite.equalsIgnoreCase("http://www.knongdai.com")){
+					continueSite += "/auto-login?user-hash="+user.getUserHash()+"&continue-site="+continueSite;
+				}
 				
 				Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
 	
@@ -207,17 +239,17 @@ public class FaceBookController {
 	
 				SecurityContextHolder.setContext(context);
 	
+			    Cookie[] cookies = request.getCookies();
+				
 				ck=new Cookie("KD_USER_HASH", user.getUserHash());//deleting value of cookie  
 				ck.setMaxAge( /* Day */ 1 * 24 * 60 * 60 * 1000);//the maximum age to 1 month  
 				ck.setPath("/");
-				ck.setDomain("knongdai.com");
+				ck.setDomain(domain);
 				response.addCookie(ck);//adding cookie in the response  
-			
 				
 			}else{
 				System.out.println("User not found!" );
 			}
-	    	
 	    }else{
 	    	System.out.println("Error");
 	    }
@@ -225,18 +257,9 @@ public class FaceBookController {
 	    
 	    request.getSession().setAttribute("FACEBOOK_ACCESS_TOKEN", accessToken);
 	    
-	    String redirectUrl = "";
-	    if(continueSite != null){
-	    	System.out.println(continueSite + "/auto-login?user-hash="+userHash+"&continue-site="+continueSite);
-			redirectUrl = continueSite + "/auto-login?user-hash="+userHash+"&continue-site="+continueSite;
-		}else{
-			System.out.println(continueSite );
-			redirectUrl = "http://www.knongdai.com";
-		}
-	    
-	  
+		System.out.println("redirect:"+continueSite);
 
-	    return "redirect:"+redirectUrl;
+	    return "redirect:"+continueSite;
 	  }
 	  
 	  

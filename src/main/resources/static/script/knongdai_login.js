@@ -4,14 +4,8 @@ function setCookie(cname, cvalue) {
 	d.setTime(d.getTime() + ( /*DAY*/1 * 24 * 60 * 60 * 1000));
 	var expires = "expires=" + d.toGMTString();
 	
-	var domain =  window.location.hostname;
+	var domain =  getDomain();
 	
-	/*if( domain.substr(domain.lastIndexOf('.'),4) == 'com'){
-		domain = "knongdai.com";
-	} else{
-		domain = "khmeracademy.org";
-	}*/
-	domain = "knongdai.com";
 	document.cookie = cname + "=" + cvalue + "; " + expires+ ";domain="+domain+";path=/";     // localhost"; //;domain=knongdai.com  ;domain=120.136.24.174;"
 }
 function getCookie(cname) {
@@ -38,15 +32,29 @@ function isAnonymous(continueSite) {
 
 function isAuthenticated(continueSite){
 	var USER_HASH = getCookie("KD_USER_HASH");
+	var domain =  getDomain();
 	if(USER_HASH != ""){
 		if( continueSite != ""){ 
 			location.href = continueSite+"/auto-login?user-hash="+USER_HASH+"&continue-site="+continueSite;
 		}else{
-			location.href = "http://www.knongdai.com/";
+			location.href = "http://www."+domain;
 		}
 	}
 }
 
 function deleteCookie() {
-	document.cookie = "KD_USER_HASH=;expires=0;domain=knongdai.com;path=/";
+	var domain =  getDomain();
+	document.cookie = "KD_USER_HASH=;expires=0;domain="+domain+";path=/";
+}
+
+function getDomain(){
+	var domain =  window.location.hostname;
+	
+	if( domain.substr(domain.lastIndexOf('.'),4) == 'com'){
+		domain = "knongdai.com";
+	} else{
+		domain = "khmeracademy.org";
+	}
+	
+	return domain;
 }
