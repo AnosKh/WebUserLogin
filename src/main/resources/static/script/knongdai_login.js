@@ -6,7 +6,7 @@ function setCookie(cname, cvalue) {
 	
 	var domain =  getDomain();
 	
-	document.cookie = cname + "=" + cvalue + "; " + expires+ ";domain="+"localhost"+";path=/";     // localhost"; //;domain=knongdai.com  ;domain=120.136.24.174;"
+	document.cookie = cname + "=" + cvalue + "; " + expires+ ";domain="+domain+";path=/";     // localhost"; //;domain=knongdai.com  ;domain=120.136.24.174;"
 }
 function getCookie(cname) {
 	var name = cname + "=";
