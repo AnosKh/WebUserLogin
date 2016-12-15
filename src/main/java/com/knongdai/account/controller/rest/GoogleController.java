@@ -1,6 +1,5 @@
 package com.knongdai.account.controller.rest;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,215 +47,211 @@ import com.knongdai.account.services.UserService;
 @Controller
 @RequestMapping(value = "/google")
 public class GoogleController {
-	
-	  private static Logger logger = LoggerFactory.getLogger(GoogleController.class);
 
-	  @Value("${KD_GOOGLE_APP_API_KEY}")
-	  private   String YOUR_API_KEY;
-	  @Value("${KD_GOOGLE_API_SECRET}")
-	  private   String YOUR_API_SECRET;
-	  @Value("${KD_HOST}")
-	  private   String HOST;
-	  private static  String CALLBACK_URL = "/google/callback";
-	  
-	  private static final Token EMPTY_TOKEN = null;
-	  
-	  private static String continueSite;
-	  private static String domain;
-	  
-	  @Autowired
-	  private HttpHeaders header;
-		
-	  @Autowired
-	  private RestTemplate rest;
-		
-	  @Autowired
-	  private String WS_URL;
-	  
-	  @Autowired
-	  private UserService userService;
+	private static Logger logger = LoggerFactory.getLogger(GoogleController.class);
 
-	  //permission scope
-	  private static final List<String> SCOPES = new ArrayList<String>(){
-	    private static final long serialVersionUID = 1L;
-	      {
-	        add("profile");
-	        add("email");
-	      }
-	  };
+	@Value("${KD_GOOGLE_APP_API_KEY}")
+	private String YOUR_API_KEY;
+	@Value("${KD_GOOGLE_API_SECRET}")
+	private String YOUR_API_SECRET;
+	@Value("${KD_HOST}")
+	private String HOST;
+	private static String CALLBACK_URL = "/google/callback";
 
-	  //API End point
-	  //private static final String PROTECTED_RESOURCE_URL = "https://www.googleapis.com/plus/v1/people/me";
-	  private static final String USER_PROFILE_API = "https://www.googleapis.com/oauth2/v1/userinfo";
-	  private static final String QUERY = "?fields=id,name,email,picture";
+	private static final Token EMPTY_TOKEN = null;
 
-	  @RequestMapping(value ="/signin", method = RequestMethod.GET)
-	  public void signin(HttpServletRequest request, HttpServletResponse response , @RequestParam("continue-site") String continueSiteParam) throws IOException {
-	    logger.debug("signin");
+	private static String continueSite;
+	private static String domain;
 
-	    String secretState = "secret" + new Random().nextInt(999_999);
-	    request.getSession().setAttribute("SECRET_STATE", secretState);
+	@Autowired
+	private HttpHeaders header;
 
-	    OAuthService service = new ServiceBuilder()
-	      .provider(GoogleApi20.class)
-	      .apiKey(YOUR_API_KEY)
-	      .apiSecret(YOUR_API_SECRET)
-	      .callback(HOST + CALLBACK_URL)
-	      .scope(String.join(" ", SCOPES))
-	      .state(secretState)
-	      .connectTimeout(10)
-	      .build();
+	@Autowired
+	private RestTemplate rest;
 
-	    String redirectURL = service.getAuthorizationUrl(EMPTY_TOKEN);
-	    logger.info("redirectURL:{}", redirectURL);
+	@Autowired
+	private String WS_URL;
 
-	    domain = continueSiteParam;
-	    
-	    System.out.println("continueSiteParam =====>>>>> " +  continueSiteParam);	    
-	    
-	    if(!continueSiteParam.equalsIgnoreCase("")){
-	    	
-		    System.out.println("lastIndexOf =====>>>>> " +  domain.substring(domain.lastIndexOf(".")));	    
-	    	
-	    	if(domain.substring(domain.lastIndexOf(".") , domain.lastIndexOf(".") +4 ).equalsIgnoreCase(".com")){
+	@Autowired
+	private UserService userService;
+
+	// permission scope
+	private static final List<String> SCOPES = new ArrayList<String>() {
+		private static final long serialVersionUID = 1L;
+		{
+			add("profile");
+			add("email");
+		}
+	};
+
+	// API End point
+	// private static final String PROTECTED_RESOURCE_URL =
+	// "https://www.googleapis.com/plus/v1/people/me";
+	private static final String USER_PROFILE_API = "https://www.googleapis.com/oauth2/v1/userinfo";
+	private static final String QUERY = "?fields=id,name,email,picture";
+
+	@RequestMapping(value = "/signin", method = RequestMethod.GET)
+	public void signin(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("continue-site") String continueSiteParam) throws IOException {
+		logger.debug("signin");
+
+		domain = continueSiteParam;
+		continueSite = "";
+		System.out.println("continueSiteParam =====>>>>> " + continueSiteParam);
+
+		if (!continueSiteParam.equalsIgnoreCase("")) {
+
+			System.out.println("lastIndexOf =====>>>>> " + domain.substring(domain.lastIndexOf(".")));
+
+			if (domain.substring(domain.lastIndexOf("."), domain.lastIndexOf(".") + 4).equalsIgnoreCase(".com")) {
 				domain = "knongdai.com";
-			} else{
+				HOST = "http://login.knongdai.com";
+			} else {
 				domain = "khmeracademy.org";
+				HOST = "http://login.khmeracademy.org";
 			}
-	    	
-		    System.out.println("DOMAIN =====>>>>> " + domain + "  |  continueSite " +  continueSite + "   |   " +  domain.substring(domain.lastIndexOf(".")));	    
-		    
-		    continueSite = continueSiteParam;
-		    
-	    }else{
-	    	domain = "knongdai.com";
-	    	continueSite = "http://www.knongdai.com";
-	    }		
-	    	    
-	    response.sendRedirect(redirectURL);
-	  }
 
-	  @RequestMapping(value ="/callback", method = RequestMethod.GET)
-	  public String callback(@RequestParam(value = "code", required = false) String code,
-	      @RequestParam(value = "state", required = false) String state,
-	      HttpServletRequest request, HttpServletResponse response ) {
-	    logger.debug("callback");
-	    logger.info("code:{}", code);
-	    logger.info("state:{}", state);
+			System.out.println("DOMAIN =====>>>>> " + domain + "  |  continueSite " + continueSite + "   |   "
+					+ domain.substring(domain.lastIndexOf(".")));
 
-	    String secretState = (String) request.getSession().getAttribute("SECRET_STATE");
-	    String userHash = "";
-	   
-	    if (secretState.equals(state)) {
-	      logger.info("State value does match!");
-	    } else {
-	      logger.error("Ooops, state value does not match!");
-	    }
+			continueSite = continueSiteParam;
 
-	    OAuthService service = new ServiceBuilder()
-	      .provider(GoogleApi20.class)
-	      .apiKey(YOUR_API_KEY)
-	      .apiSecret(YOUR_API_SECRET)
-	      .callback(HOST + CALLBACK_URL)
-	      .build();
+		} else {
+			domain = "knongdai.com";
+			continueSite = "http://www.knongdai.com";
+		}
 
-	    String requestUrl = USER_PROFILE_API + QUERY;
+		String secretState = "secret" + new Random().nextInt(999_999);
+		request.getSession().setAttribute("SECRET_STATE", secretState);
 
-	    final Verifier verifier = new Verifier(code);
-	    final Token accessToken = service.getAccessToken(EMPTY_TOKEN, verifier);
+		OAuthService service = new ServiceBuilder().provider(GoogleApi20.class).apiKey(YOUR_API_KEY)
+				.apiSecret(YOUR_API_SECRET).callback(HOST + CALLBACK_URL).scope(String.join(" ", SCOPES))
+				.state(secretState).connectTimeout(10).build();
 
-	    final OAuthRequest oauthRequest = new OAuthRequest(Verb.GET, requestUrl, service);
-	    service.signRequest(accessToken, oauthRequest);
+		String redirectURL = service.getAuthorizationUrl(EMPTY_TOKEN);
+		logger.info("redirectURL:{}", redirectURL);
 
-	    final Response resourceResponse = oauthRequest.send();
+		response.sendRedirect(redirectURL);
+	}
 
-	    logger.info("code:{}", resourceResponse.getCode());
-	    logger.info("body:{}", resourceResponse.getBody());
-	    logger.info("message:{}",resourceResponse.getMessage());
+	@RequestMapping(value = "/callback", method = RequestMethod.GET)
+	public String callback(@RequestParam(value = "code", required = false) String code,
+			@RequestParam(value = "state", required = false) String state, HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.debug("callback");
+		logger.info("code:{}", code);
+		logger.info("state:{}", state);
 
-	    final JSONObject obj = new JSONObject(resourceResponse.getBody());
-	    logger.info("json:{}" ,obj.toString());
+		String secretState = (String) request.getSession().getAttribute("SECRET_STATE");
+		String userHash = "";
 
-	    /*String googleid = obj.getString("id");
-	    String name = obj.getString("name");
-	    String email = obj.getString("email") + " | " + obj.getString("picture");*/
+		if (secretState.equals(state)) {
+			logger.info("State value does match!");
+		} else {
+			logger.error("Ooops, state value does not match!");
+		}
 
-	    FrmSocailUser userScoial = new FrmSocailUser();
-	    userScoial.setEmail(obj.getString("email"));
-	    userScoial.setUsername(obj.getString("name"));
-	    /*if(obj.getString("gender") != null){
-	    	userScoial.setGender(obj.getString("gender"));  
-	    	System.out.println("GENDER =====> " + obj.getString("gender"));
-	    }else{
-	    	System.out.println("GENDER =====> OB SOR YO ");
-	    }*/
-	    userScoial.setUserImageUrl(obj.getString("picture"));
-	    userScoial.setSocialId(obj.getString("id"));
-	    userScoial.setSocialType("1");  // 1 = google ; 2=facebook ; 3=twifter  ; 
-	    userScoial.setSignUpWith("0");  // 0 = Web; 1 = iOS  ; 2 = AOS
-	    
-	    HttpEntity<Object> requestAPI = new HttpEntity<Object>(userScoial , header);
-	    ResponseEntity<Map> responsAPI = rest.exchange(WS_URL+"/v1/authentication/login_with_scoial", HttpMethod.POST, requestAPI, Map.class);
-	    
-	    Map<String, Object> map = (HashMap<String, Object>)responsAPI.getBody();
-	    
-	    if(map.get("USER") != null){
-	    	
-	    	Map<String, Object> userMap = (HashMap<String, Object>) map.get("USER");
-	    	
-	    	UserLogin userLogin = new UserLogin();
-	    	userLogin.setEmail((String) userMap.get("EMAIL"));
-	    	User user = userService.findUserByEmail(userLogin);
-	    	
-	    	System.out.println(userMap);
-	    	System.out.println("1 Email : " + (String) userMap.get("EMAIL"));
-	    	
-	    	Cookie ck=new Cookie("KD_USER_HASH","");//deleting value of cookie  
-			ck.setMaxAge(0);//changing the maximum age to 0 seconds 
+		OAuthService service = new ServiceBuilder().provider(GoogleApi20.class).apiKey(YOUR_API_KEY)
+				.apiSecret(YOUR_API_SECRET).callback(HOST + CALLBACK_URL).build();
+
+		String requestUrl = USER_PROFILE_API + QUERY;
+
+		final Verifier verifier = new Verifier(code);
+		final Token accessToken = service.getAccessToken(EMPTY_TOKEN, verifier);
+
+		final OAuthRequest oauthRequest = new OAuthRequest(Verb.GET, requestUrl, service);
+		service.signRequest(accessToken, oauthRequest);
+
+		final Response resourceResponse = oauthRequest.send();
+
+		logger.info("code:{}", resourceResponse.getCode());
+		logger.info("body:{}", resourceResponse.getBody());
+		logger.info("message:{}", resourceResponse.getMessage());
+
+		final JSONObject obj = new JSONObject(resourceResponse.getBody());
+		logger.info("json:{}", obj.toString());
+
+		/*
+		 * String googleid = obj.getString("id"); String name =
+		 * obj.getString("name"); String email = obj.getString("email") + " | "
+		 * + obj.getString("picture");
+		 */
+
+		FrmSocailUser userScoial = new FrmSocailUser();
+		userScoial.setEmail(obj.getString("email"));
+		userScoial.setUsername(obj.getString("name"));
+		/*
+		 * if(obj.getString("gender") != null){
+		 * userScoial.setGender(obj.getString("gender"));
+		 * System.out.println("GENDER =====> " + obj.getString("gender"));
+		 * }else{ System.out.println("GENDER =====> OB SOR YO "); }
+		 */
+		userScoial.setUserImageUrl(obj.getString("picture"));
+		userScoial.setSocialId(obj.getString("id"));
+		userScoial.setSocialType("1"); // 1 = google ; 2=facebook ; 3=twifter ;
+		userScoial.setSignUpWith("0"); // 0 = Web; 1 = iOS ; 2 = AOS
+
+		HttpEntity<Object> requestAPI = new HttpEntity<Object>(userScoial, header);
+		ResponseEntity<Map> responsAPI = rest.exchange(WS_URL + "/v1/authentication/login_with_scoial", HttpMethod.POST,
+				requestAPI, Map.class);
+
+		Map<String, Object> map = (HashMap<String, Object>) responsAPI.getBody();
+
+		if (map.get("USER") != null) {
+
+			Map<String, Object> userMap = (HashMap<String, Object>) map.get("USER");
+
+			UserLogin userLogin = new UserLogin();
+			userLogin.setEmail((String) userMap.get("EMAIL"));
+			User user = userService.findUserByEmail(userLogin);
+
+			System.out.println(userMap);
+			System.out.println("1 Email : " + (String) userMap.get("EMAIL"));
+
+			Cookie ck = new Cookie("KD_USER_HASH", "");// deleting value of
+														// cookie
+			ck.setMaxAge(0);// changing the maximum age to 0 seconds
 			ck.setPath("/");
 			ck.setDomain("knongdai.com");
-			response.addCookie(ck);//adding cookie in the response  
-			
-			if(user != null){
+			response.addCookie(ck);// adding cookie in the response
+
+			if (user != null) {
 				System.out.println("2 Email : " + user.getEmail());
-				
-				if(!continueSite.equalsIgnoreCase("http://www.knongdai.com")){
-					continueSite += "/auto-login?user-hash="+user.getUserHash()+"&continue-site="+continueSite;
+
+				if (!continueSite.equalsIgnoreCase("http://www.knongdai.com")) {
+					continueSite += "/auto-login?user-hash=" + user.getUserHash() + "&continue-site=" + continueSite;
 				}
-				
-				Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
-	
+
+				Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(),
+						user.getAuthorities());
+
 				SecurityContext context = new SecurityContextImpl();
 				context.setAuthentication(authentication);
-	
+
 				SecurityContextHolder.setContext(context);
-	
-				ck=new Cookie("KD_USER_HASH", user.getUserHash());//deleting value of cookie  
-				ck.setMaxAge( /* Day */ 1 * 24 * 60 * 60 * 1000);//the maximum age to 1 month  
+
+				ck = new Cookie("KD_USER_HASH", user.getUserHash());// deleting
+																	// value of
+																	// cookie
+				ck.setMaxAge( /* Day */ 1 * 24 * 60 * 60 * 1000);// the maximum
+																	// age to 1
+																	// month
 				ck.setPath("/");
 				ck.setDomain(domain);
-				response.addCookie(ck);//adding cookie in the response 
-				
-				
-				
-			}else{
-				System.out.println("User not found!" );
+				response.addCookie(ck);// adding cookie in the response
+
+			} else {
+				System.out.println("User not found!");
 			}
-	    	
-	    }else{
-	    	System.out.println("Error");
-	    }
 
-	    request.getSession().setAttribute("GOOGLE_ACCESS_TOKEN", accessToken);
+		} else {
+			System.out.println("Error");
+		}
 
-	   
-	    
-	  
+		request.getSession().setAttribute("GOOGLE_ACCESS_TOKEN", accessToken);
 
-	    return "redirect:"+continueSite;
-	    
-	  }
+		return "redirect:" + continueSite;
 
-	  
+	}
 
 }

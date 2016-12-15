@@ -18,10 +18,7 @@ app.controller('forgetPasswordCtrl', function($scope,$http,$rootScope){
 				$scope.sendMail();
 			}
 		}).error(function(response){
-			
-			alert(response.DATA);
-			alert(response.MESSAGE);
-			alert(response.STATUS);
+			console.log(response);
 			alert("We couldn’t find this email address.");
 			
 		});

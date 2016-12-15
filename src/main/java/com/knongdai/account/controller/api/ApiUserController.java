@@ -196,7 +196,7 @@ public class ApiUserController {
 		} catch(Exception e){
 			map.put("STATUS", false);
 			map.put("MESSAGE","Error");
-			
+			e.printStackTrace();
 			
 		}
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);

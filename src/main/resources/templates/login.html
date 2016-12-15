@@ -76,14 +76,14 @@
     
     	<p style="display: none" id="continueSite" th:text="${continueSite}"></p>
     
-	     <div sec:authorize="isAnonymous()">
+	     <!-- <div sec:authorize="isAnonymous()">
 	     
 	     <p>Hello
-<!-- 		  		<script type="text/javascript">  -->
+		  		<script type="text/javascript"> 
 // 		  			isAnonymous($("#continueSite").text());
-<!-- 				</script> -->
+				</script>
 </p>
-		 </div>
+		 </div> -->
 		  
 		
     
@@ -123,28 +123,34 @@
 	<div id="loginDiv" style="display: none">
 	
 		<form action="login" name="frmLogin" id="frmLogin" method="POST" autocomplete="off">
+			
 			<input type="text" class="email" name="email" placeholder="Email"/>
+			
 			<input type="password" class="lock" name="password" placeholder="Password"/>
 		
-			<div class="forgot">
-				 
-		 		  <div class="login-para">
-		 			<p><a href="/forget_password"> Forgot Password? </a></p>
-		 		 </div>
-				<div class="clear"> </div>
-			</div>
 			<div class="login-bwn">
 			   <input type="submit" value="Log in"/>
 			</div>
+			
 		</form>
+		
+		
+	
+	</div>	
+	
+	
+		<div class="forgot"> 
+		 	<div class="login-para">
+		 		<p><a href="/forget_password"> Forgot Password? </a></p>
+		 	</div>
+			<div class="clear"> </div>
+		</div>
 		
 		<div class="login-bottom">
 			 <div class="social-icons">
 				<h4>Don't have an Account? <a href="/register"> Register Now!</a></h4>
 			</div>
 	    </div>
-	
-	</div>	
 	
 	
 </div>
@@ -210,7 +216,7 @@
   			  	            			timer: 2000,  
 										showConfirmButton: false 
 									});
-  									alert(data);
+  									//alert(data);
   			  	            		setCookie("KD_USER_HASH", data);
   			  	            		isAuthenticated($("#continueSite").text());
   			  	            	}
@@ -229,6 +235,7 @@
         	
         	
         });
+        
         function ValidateForm(inputText, inputText1)  
 		{  
 			var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 

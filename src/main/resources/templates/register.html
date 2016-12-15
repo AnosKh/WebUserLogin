@@ -87,51 +87,69 @@
 	</div>
         
 	<div class="login">
-	<div class="login-bottom login-bottom-top">
-		<div><img th:src="@{/static/myimages/KA.png}" alt="Khmer Academy Logo" class="img-responsive"></div>
-		<h2>SIGN UP</h2>
-		<p>With your social media account</p>
-	 <div class="social-icons">
-		<div class="button">
-			<a class="fa" href="#"> <i class="anc-fa"> </i> <span>Facebook</span>
-				<!-- <div class="clear"> </div> -->
-			</a>
-			<a class="tw" href="#"> <i class="anc-tw"> </i> <span>Twitter</span>
-			<!-- <div class="clear"> </div> -->
-			</a>
-			<a class="go" href="#"><i class="anc-go"> </i><span>Google+</span>
-			<!-- <div class="clear"> </div> -->
-			</a>
-				<!-- <div class="clear"> </div> -->
-		</div>
-		
-	</div>
-  </div>
-	<div class="or-container">
-                <hr class="or-hr">
-                <h2 id="or">OR</h2>
-    </div>
-	<form action="login" id="frmLogin" method="POST" autocomplete="off">
-		<div class="register">
-			<input style="font-size= 14px" type="text" class="user validate" id="name" name="Username" ng-model="username" placeholder="Username"/>
-			<input style="font-size= 14px" type="text" class="email validate" id="email" name="Email" ng-model="email" placeholder="Email"/>
-			<input style="font-size= 14px" type="text" class="email validate" id="re_enter_email" name="Re_Email" ng-model="re_enter_email" placeholder="Re-enter Email"/>
-			<input style="font-size= 14px" type="password" class="lock validate" id="password" name="password" ng-model="password" placeholder="Password"/>
-			
-		</div>
-	<div class="login-bwn">
-	   <!-- <input type="submit" value="Sign Up" ng-submit="register()"/> -->
-
-	   <button name="action" type="button" ng-click="register()" onclick="">Sign up</button>
-
-	</div>
-	</form>
-	<div class="login-bottom">
-	 <div class="social-icons">
-		<h4>Already have an Account? <a href="/login"> Login!</a></h4>
-		
-	</div>
-  </div>
+				
+				<div class="login-bottom login-bottom-top">
+						<div><img th:src="@{/static/myimages/KA.png}" alt="Khmer Academy Logo" class="img-responsive"></div>
+						<h2>Register</h2>
+						<p>With your social media account</p>
+						 <div class="social-icons">
+							<div class="button">
+								<a style="width:100%" class="fa" id="btFB" href="#/facebook/signin" th:href="@{#/facebook/signin}"> <i class="anc-fa"> </i> <span>Facebook</span>
+									<!-- <div class="clear"> </div> -->
+								</a>
+								<!-- <a class="tw" href="#"> <i class="anc-tw"> </i> <span>Twitter</span>
+								<div class="clear"> </div>
+								</a> -->
+							</div>
+							
+							
+							<div class="button">
+								<a style="width:100%" class="go" id="btGOOGLE" href="#/google/signin" th:href="@{#/google/signin}"><i class="anc-go"> </i><span>Google+</span></a>
+							</div>
+							
+							<div class="or-container">
+					                <hr class="or-hr">
+					                <h2 id="or">OR</h2>
+					    	</div>
+					    
+					    	<div class="button">
+								<a style="width:100%" class="ka" id="btLoginWithKA" href="#KhmerAcademy" th:href="@{#KhmerAcademy}"><i class="khmeracademy"> </i><span>KhmerAcademy</span></a>
+							</div>
+							
+						</div>
+				  </div>
+				  
+				  
+				  
+				  <div id="loginDiv" style="display: none">
+	
+						<form action="login" id="frmLogin" method="POST" autocomplete="off">
+							<div class="register">
+							
+								<input type="text" class="user validate" id="name" name="Username" ng-model="username" placeholder="Username"/>
+								<input  type="text" class="email validate" id="email" name="Email" ng-model="email" placeholder="Email"/>
+								<input  type="text" class="email validate" id="re_enter_email" name="Re_Email" ng-model="re_enter_email" placeholder="Re-enter Email"/>
+								<input  type="password" class="lock validate" id="password" name="password" ng-model="password" placeholder="Password"/>
+								
+							</div>
+						<div class="login-bwn">
+						   <!-- <input type="submit" value="Sign Up" ng-submit="register()"/> -->
+					
+						   <button name="action" type="button" ng-click="register()" onclick="">Sign up</button>
+					
+						</div>
+						</form>
+						<div class="login-bottom">
+							 <div class="social-icons">
+								<h4>Already have an Account? <a href="/login"> Login!</a></h4>
+								
+							</div>
+						 </div>
+						
+						
+					
+					</div>	
+	
 </div>
 <div class="one-knongdai">
 	<p>One KnongDai account for everything in KnongDai</p>
@@ -162,5 +180,30 @@
    			 }, 5000);
    		 });
 		</script>
+		
+		
+		<script type="text/javascript">
+		
+		$('.page-alerts').hide();
+		
+        $(function() {
+        	
+        	
+        	$("#btLoginWithKA").click(function(e){
+        		$("#loginDiv").toggle();
+        	});
+        	
+        	$("#btFB").click(function(e){
+    			location.href = "/facebook/signin?continue-site="+$("#continueSite").text();
+        	});
+        	
+        	$("#btGOOGLE").click(function(e){
+    			location.href = "/google/signin?continue-site="+$("#continueSite").text();
+        	});
+        	
+        	
+        });
+        
+        </script>
  </body>
 </html>

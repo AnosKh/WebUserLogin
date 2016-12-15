@@ -6,7 +6,7 @@ function setCookie(cname, cvalue) {
 	
 	var domain =  getDomain();
 	
-	document.cookie = cname + "=" + cvalue + "; " + expires+ ";domain="+domain+";path=/";     // localhost"; //;domain=knongdai.com  ;domain=120.136.24.174;"
+	document.cookie = cname + "=" + cvalue + "; " + expires+ ";domain="+"localhost"+";path=/";     // localhost"; //;domain=knongdai.com  ;domain=120.136.24.174;"
 }
 function getCookie(cname) {
 	var name = cname + "=";
@@ -32,12 +32,12 @@ function isAnonymous(continueSite) {
 
 function isAuthenticated(continueSite){
 	var USER_HASH = getCookie("KD_USER_HASH");
-	var domain =  getDomain();
+	var domain =  getDomain(); 
 	if(USER_HASH != ""){
 		if( continueSite != ""){ 
 			location.href = continueSite+"/auto-login?user-hash="+USER_HASH+"&continue-site="+continueSite;
-		}else{
-			location.href = "http://www."+domain;
+		}else{ 
+			location.href = "http://www."+domain; a
 		}
 	}
 }
